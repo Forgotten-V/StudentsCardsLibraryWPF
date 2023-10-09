@@ -1,0 +1,92 @@
+﻿<Window x:Class="StudentsCardsLibraryWPF.CreateUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentsCardsLibraryWPF"
+        mc:Ignorable="d"
+        Title="Создание карточки студента" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="40*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="40*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"></ColumnDefinition>
+            <ColumnDefinition Width="280*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="365*"></ColumnDefinition>
+            <ColumnDefinition Width="30*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="24" TextWrapping="Wrap" TextAlignment="Center" Grid.ColumnSpan="5">
+            Для создания карточки студента заполните информацию о нём
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите фамилию студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите имя студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="7" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите отчество студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="9" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите факультет студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="11" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите специальность студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="13" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите учебную группу студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="15" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите текущий курс студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="17" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите город проживания студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="19" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите E-mail студента:
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="21" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
+            Введите номер телефона студента:
+        </TextBlock>
+        <TextBox x:Name="InputSurname" Grid.Column="3" Grid.Row="3" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputName" Grid.Column="3" Grid.Row="5" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputLastname" Grid.Column="3" Grid.Row="7" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputFaculty" Grid.Column="3" Grid.Row="9" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputSpeciality" Grid.Column="3" Grid.Row="11" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputGroup" Grid.Column="3" Grid.Row="13" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputCourse" Grid.Column="3" Grid.Row="15" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputCity" Grid.Column="3" Grid.Row="17" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputEmail" Grid.Column="3" Grid.Row="19" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <TextBox x:Name="InputPhone" Grid.Column="3" Grid.Row="21" FontSize="16" Grid.ColumnSpan="3"></TextBox>
+        <Button x:Name="CreateUserButton" Grid.Column="1" Grid.Row="23" FontSize="20" Content="Подтвердить создание пользователя" Grid.ColumnSpan="3" Click="CreateUserButton_Click"  />
+        <Button x:Name="ExitButton" Grid.Column="5" Grid.Row="23" FontSize="20" Content="Вернуться в главное меню" Click="ExitButton_Click"  />
+    </Grid>
+</Window>
