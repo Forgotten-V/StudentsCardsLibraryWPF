@@ -29,11 +29,11 @@ namespace StudentsCardsLibraryWPF
             InitializeComponent();
 
             string PathFiles = Directory.GetCurrentDirectory();
-            string UserAppConfigPath = PathFiles.Replace("\\bin\\Debug\\net7.0-windows", "");
+            string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            string UserLibraryPath = PathFiles.Replace("\\bin\\Debug\\net7.0-windows", "");
+            string UserLibraryPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserLibraryPath = UserLibraryPath + "\\UserLibrary.json";
             UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
@@ -219,11 +219,11 @@ namespace StudentsCardsLibraryWPF
             else if (StudentChoise == true) 
             {
                 string PathFiles = Directory.GetCurrentDirectory();
-                string UserAppConfigPath = PathFiles.Replace("\\bin\\Debug\\net7.0-windows", "");
+                string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
                 UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
                 UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
                 UserAppConfig Config = UConfig.InitializateUserAppConfig();
-                string UserLibraryPath = PathFiles.Replace("\\bin\\Debug\\net7.0-windows", "");
+                string UserLibraryPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
                 UserLibraryPath = UserLibraryPath + "\\UserLibrary.json";
                 UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
                 UserLibrary User = ULManager.InitializateUserLibrary();

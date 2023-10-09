@@ -32,7 +32,7 @@ private void CreateUserButton_Click(object sender, RoutedEventArgs e)
         {
 
             string UserLibraryPath = Directory.GetCurrentDirectory();
-            UserLibraryPath = UserLibraryPath.Replace("\\bin\\Debug\\net7.0-windows", "");
+            UserLibraryPath = UserLibraryPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserLibraryPath = UserLibraryPath + "\\UserLibrary.json";
             UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();

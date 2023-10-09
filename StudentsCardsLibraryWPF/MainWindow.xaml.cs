@@ -29,11 +29,6 @@ namespace StudentsCardsLibraryWPF
         public MainWindow()
         {
             InitializeComponent();
-            string UserLibraryPath = Directory.GetCurrentDirectory();
-            UserLibraryPath = UserLibraryPath.Replace("\\bin\\Debug\\net7.0-windows", "");
-            UserLibraryPath = UserLibraryPath + "\\UserLibrary.json";
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
-            UserLibrary User = ULManager.InitializateUserLibrary();
         }
 
 

@@ -37,7 +37,7 @@ namespace StudentsCardsLibraryWPF
         private void Method1_Click(object sender, RoutedEventArgs e)
         {
             string UserAppConfigPath = Directory.GetCurrentDirectory();
-            UserAppConfigPath = UserAppConfigPath.Replace("\\bin\\Debug\\net7.0-windows", "");
+            UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
@@ -51,7 +51,7 @@ namespace StudentsCardsLibraryWPF
         private void Method2_Click(object sender, RoutedEventArgs e)
         {
             string UserAppConfigPath = Directory.GetCurrentDirectory();
-            UserAppConfigPath = UserAppConfigPath.Replace("\\bin\\Debug\\net7.0-windows", "");
+            UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
@@ -65,7 +65,7 @@ namespace StudentsCardsLibraryWPF
         private void Method3_Click(object sender, RoutedEventArgs e)
         {
             string UserAppConfigPath = Directory.GetCurrentDirectory();
-            UserAppConfigPath = UserAppConfigPath.Replace("\\bin\\Debug\\net7.0-windows", "");
+            UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
@@ -79,7 +79,7 @@ namespace StudentsCardsLibraryWPF
         private void Method4_Click(object sender, RoutedEventArgs e)
         {
             string UserAppConfigPath = Directory.GetCurrentDirectory();
-            UserAppConfigPath = UserAppConfigPath.Replace("\\bin\\Debug\\net7.0-windows", "");
+            UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
@@ -93,7 +93,7 @@ namespace StudentsCardsLibraryWPF
         private void Method5_Click(object sender, RoutedEventArgs e)
         {
             string UserAppConfigPath = Directory.GetCurrentDirectory();
-            UserAppConfigPath = UserAppConfigPath.Replace("\\bin\\Debug\\net7.0-windows", "");
+            UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
