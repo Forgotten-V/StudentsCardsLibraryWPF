@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsCardsLibraryWPF", "StudentsCardsLibraryWPF\StudentsCardsLibraryWPF.csproj", "{236545FB-A693-49C9-9898-7C2AA2E37523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsCardLibraryConsole", "StudentsCardLibraryConsole\StudentsCardLibraryConsole.csproj", "{DA60FDFE-78C2-4048-A45A-C63E6D3AC9D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsCardLibraryConsole", "StudentsCardLibraryConsole\StudentsCardLibraryConsole.csproj", "{DA60FDFE-78C2-4048-A45A-C63E6D3AC9D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

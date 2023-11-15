@@ -7,39 +7,48 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="CreateUser.xaml.cs">
+    <Compile Update="View\FrameCreateUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="EditUser.xaml.cs">
+    <Compile Update="View\FrameEditUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PickFilterMethod.xaml.cs">
+    <Compile Update="View\FramePickFilterMethod.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserInformation.xaml.cs">
+    <Compile Update="View\FrameUserPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ViewUser.xaml.cs">
+    <Compile Update="View\FrameUsersList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\StartPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="CreateUser.xaml">
+    <Page Update="View\FrameCreateUser.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="EditUser.xaml">
+    <Page Update="View\FrameEditUser.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="View\FramePickFilterMethod.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PickFilterMethod.xaml">
+    <Page Update="View\FrameUserPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserInformation.xaml">
+    <Page Update="View\FrameUsersList.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ViewUser.xaml">
+    <Page Update="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\StartPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

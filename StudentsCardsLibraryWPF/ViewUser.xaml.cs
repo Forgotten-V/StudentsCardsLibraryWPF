@@ -243,16 +243,6 @@ namespace StudentsCardsLibraryWPF
                     }
                 }
             }
-
-
-
-
-
-
-
-
-
-
         }
     }
 }
