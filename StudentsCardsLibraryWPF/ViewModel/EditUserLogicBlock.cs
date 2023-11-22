@@ -52,6 +52,28 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenStartPage;
         }
 
+        public ICommand OpenUsersListPage
+        {
+            get { return new NavigateRelayCommand(VOpenUsersListPage); }
+        }
+
+        private void VOpenUsersListPage()
+        {
+            var OpenUsersListPage = new FrameUsersList();
+            App.Current.MainWindow.Content = OpenUsersListPage;
+        }
+
+        public ICommand OpenUserPage
+        {
+            get { return new NavigateRelayCommand(VOpenUserPage); }
+        }
+
+        private void VOpenUserPage()
+        {
+            var OpenUserPage = new FrameUserPage();
+            App.Current.MainWindow.Content = OpenUserPage;
+        }
+
         public ICommand SaveChanges
         {
             get { return new NavigateRelayCommand(VSaveChanges); }
@@ -67,8 +89,9 @@ namespace StudentsCardsLibraryWPF.ViewModel
             {
                 MainModel Model = new MainModel();
                 Model.EditUser(InputSurname, InputName, InputLastname, InputFaculty, InputSpeciality, InputGroup, InputCourse, InputCity, InputEmail, InputPhone);
-                var OpenStartPage = new StartPage();
-                App.Current.MainWindow.Content = OpenStartPage;
+                MessageBox.Show($"Информация о пользователе {InputSurname} {InputName[0]}. {InputLastname[0]}. успешно обновлена.");
+                var OpenUsersListPage = new FrameUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
             }
         }
     }

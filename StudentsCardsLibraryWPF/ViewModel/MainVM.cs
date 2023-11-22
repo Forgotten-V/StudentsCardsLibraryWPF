@@ -65,6 +65,16 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenPickFilterMethod;
         }
 
+        public ICommand OpenUsersListPage
+        {
+            get { return new NavigateRelayCommand(VOpenUsersListPage); }
+        }
+
+        private void VOpenUsersListPage()
+        {
+            var OpenUsersListPage = new FrameUsersList();
+            App.Current.MainWindow.Content = OpenUsersListPage;
+        }
 
         public ICommand OpenMainPage
         {

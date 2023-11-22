@@ -14,25 +14,27 @@
             <RowDefinition Height="40*"></RowDefinition>
             <RowDefinition Height="50*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
+            <RowDefinition Height="40*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="40*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -49,34 +51,34 @@
             Измените необходимую информацию о студенте
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите фамилию студента:
+            Фамилия:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="5" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите имя студента:
+            Имя:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="7" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите отчество студента:
+            Отчество:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="9" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите факультет студента:
+            Факультет:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="11" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите специальность студента:
+            Специальность:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="13" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите учебную группу студента:
+            Учебная группа:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="15" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите текущий курс студента:
+            Текущий курс:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="17" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите город проживания студента:
+            Город проживания:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="19" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите E-mail студента:
+            E-mail:
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="21" FontSize="16" TextWrapping="Wrap" TextAlignment="Left">
-            Введите номер телефона студента:
+            Номер телефона:
         </TextBlock>
         <TextBox x:Name="InputSurname" Grid.Column="3" Grid.Row="3" FontSize="16" Grid.ColumnSpan="3" Text="{Binding Path = InputSurname, Mode = TwoWay}"></TextBox>
         <TextBox x:Name="InputName" Grid.Column="3" Grid.Row="5" FontSize="16" Grid.ColumnSpan="3" Text="{Binding Path = InputName, Mode = TwoWay}"></TextBox>
@@ -88,7 +90,9 @@
         <TextBox x:Name="InputCity" Grid.Column="3" Grid.Row="17" FontSize="16" Grid.ColumnSpan="3" Text="{Binding Path = InputCity, Mode = TwoWay}"></TextBox>
         <TextBox x:Name="InputEmail" Grid.Column="3" Grid.Row="19" FontSize="16" Grid.ColumnSpan="3" Text="{Binding Path = InputEmail, Mode = TwoWay}"></TextBox>
         <TextBox x:Name="InputPhone" Grid.Column="3" Grid.Row="21" FontSize="16" Grid.ColumnSpan="3" Text="{Binding Path = InputPhone, Mode = TwoWay}"></TextBox>
-        <Button x:Name="CreateUserButton" Grid.Column="1" Grid.Row="23" FontSize="20" Content="Подтвердить изменения" Grid.ColumnSpan="3" Command="{Binding SaveChanges}" />
-        <Button x:Name="ExitButton" Grid.Column="5" Grid.Row="23" FontSize="20" Content="Вернуться в главное меню" Command="{Binding OpenMainPage}"  />
+        <Button x:Name="ConfitmChangesButton" Grid.Column="1" Grid.Row="23" FontSize="20" Content="Подтвердить изменения" Grid.ColumnSpan="3" Command="{Binding SaveChanges}" />
+        <Button x:Name="OpenUsersListButton" Grid.Column="1" Grid.Row="25" FontSize="20" Content="К списку студентов" Grid.ColumnSpan="3" Command="{Binding OpenUsersListPage}" />
+        <Button x:Name="DeleteChangesButton" Grid.Column="5" Grid.Row="23" FontSize="20" Content="Отменить изменения" Command="{Binding OpenUserPage}"  />
+        <Button x:Name="ExitButton" Grid.Column="5" Grid.Row="25" FontSize="20" Content="Вернуться в главное меню" Command="{Binding OpenMainPage}"  />
     </Grid>
 </Page>

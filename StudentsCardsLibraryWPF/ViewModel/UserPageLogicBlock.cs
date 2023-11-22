@@ -33,6 +33,17 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
         public string TargetToDelete { get; set; } = "Введите фамилию пользователя для подтверждения его удаления";
 
+        public ICommand OpenUsersListPage
+        {
+            get { return new NavigateRelayCommand(VOpenUsersListPage); }
+        }
+
+        private void VOpenUsersListPage()
+        {
+            var OpenUsersListPage = new FrameUsersList();
+            App.Current.MainWindow.Content = OpenUsersListPage;
+        }
+
         public ICommand OpenMainPage
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }
@@ -55,6 +66,25 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenEditUserPage;
         }
 
+        //public void UserPagePreLoaded()
+        //{
+        //    MainModel Model = new MainModel();
+        //    UserID = Model.GetUserIDForView();
+        //    UsersInformation = Model.PresentUserInformation(UserID);
+        //    TitleInformation = TitleInformation + UsersInformation[0];
+        //    OutputSurname = UsersInformation[1];
+        //    OutputName = UsersInformation[2];
+        //    OutputLastname = UsersInformation[3];
+        //    OutputFaculty = UsersInformation[4];
+        //    OutputSpeciality = UsersInformation[5];
+        //    OutputGroup = UsersInformation[6];
+        //    OutputCourse = UsersInformation[7];
+        //    OutputCity = UsersInformation[8];
+        //    OutputEmail = UsersInformation[9];
+        //    OutputPhone = UsersInformation[10];
+        //    MessageBox.Show($"{OutputSurname}");
+        //}
+
         public UserPageLogicBlock()
         {
             MainModel Model = new MainModel();
@@ -71,7 +101,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
             OutputCity = UsersInformation[8];
             OutputEmail = UsersInformation[9];
             OutputPhone = UsersInformation[10];
-    }
+        }
 
         public ICommand TryDeleteUser
         {

@@ -29,10 +29,6 @@ namespace StudentsCardsLibraryWPF.View
             DataContext = new ViewModel.UsersListLogicBlock();
         }
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    UsersListLogicBlock MVM = new UsersListLogicBlock();
-        //    MVM.UsersListPreLoaded();
-        //}
+
     }
 }

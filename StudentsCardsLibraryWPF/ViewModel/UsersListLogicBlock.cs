@@ -17,7 +17,16 @@ namespace StudentsCardsLibraryWPF.ViewModel
 {
     public class UsersListLogicBlock : INotifyPropertyChanged
     {
+        public ICommand OpenPickFilterMethodPage
+        {
+            get { return new NavigateRelayCommand(VOpenPickFilterMethodPage); }
+        }
 
+        private void VOpenPickFilterMethodPage()
+        {
+            var OpenPickFilterMethod = new FramePickFilterMethod();
+            App.Current.MainWindow.Content = OpenPickFilterMethod;
+        }
         public ICommand OpenMainPage
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }
@@ -29,6 +38,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenStartPage;
         }
 
+        public string FilterMethodInformation { get; set; } = "";
 
         public string[][] UsersListSortValue;
 
@@ -78,7 +88,6 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
         public UsersListLogicBlock()
         {
-
             MainModel Model = new MainModel();
             UsersListSortValue = Model.CreateUsersBase();
             int FilterMethod = Model.GetFilterMethod();
@@ -91,11 +100,12 @@ namespace StudentsCardsLibraryWPF.ViewModel
             {
                 if (FilterMethod == 0)
                 {
+                    FilterMethodInformation = "Фильтрация пользователей по фамилии";
                     Users = new ObservableCollection<UserListCollection>
                     {
-                        new UserListCollection("СОРТИРОВКА ПОЛЬЗОВАТЕЛЕЙ ПО ФАМИЛИИ"),
+                        new UserListCollection($"{UsersListSortValue[0][0]}"),
                     };
-                    for (int i = 0;  i < UsersListSortValue.Length; i++)
+                    for (int i = 1;  i < UsersListSortValue.Length; i++)
                     {
                         UserListCollection phone = new UserListCollection("");
                         phone = new UserListCollection(UsersListSortValue[i][0]);
@@ -106,31 +116,34 @@ namespace StudentsCardsLibraryWPF.ViewModel
                 else
                 {
                     string PresentText = "";//Переменная, выступающая шаблоном выводимого текста для разделения критериев сортировки.
-                    string PrsentFilterMethod = "";
                     string BenchmarkValue = "";//Переменная, использующая в качестве эталона сортируемого параметра.
                     if (FilterMethod == 1)
                     {
+                        FilterMethodInformation = "Фильтрация пользователей по факультету";
+                        BenchmarkValue = UsersListSortValue[0][1];
                         PresentText = "СТУДЕНТЫ ФАКУЛЬТЕТА: ";
-                        PrsentFilterMethod = "СОРТИРОВКА ПОЛЬЗОВАТЕЛЕЙ ПО ФАКУЛЬТЕТАМ";
                     }
                     else if (FilterMethod == 2)
                     {
+                        FilterMethodInformation = "Фильтрация пользователей по специальности";
+                        BenchmarkValue = UsersListSortValue[0][1];
                         PresentText = "СТУДЕНТЫ СПЕЦИАЛЬНОСТИ: ";
-                        PrsentFilterMethod = "СОРТИРОВКА ПОЛЬЗОВАТЕЛЕЙ ПО СПЕЦИАЛЬНОСТИ";
                     }
                     else if (FilterMethod == 3)
                     {
+                        FilterMethodInformation = "Фильтрация пользователей по учебной группе";
+                        BenchmarkValue = UsersListSortValue[0][1];
                         PresentText = "СТУДЕНТЫ УЧЕБНОЙ ГРУППЫ ГРУППЫ: ";
-                        PrsentFilterMethod = "СОРТИРОВКА ПОЛЬЗОВАТЕЛЕЙ ПО УЧЕБНЫМ ГРУППАМ";
                     }
                     else if (FilterMethod == 4)
                     {
+                        FilterMethodInformation = "Фильтрация пользователей по курсу обучения";
+                        BenchmarkValue = UsersListSortValue[0][1];
                         PresentText = "СТУДЕНТЫ КУРСА: ";
-                        PrsentFilterMethod = "СОРТИРОВКА ПОЛЬЗОВАТЕЛЕЙ ПО ДЛИТЕЛЬНОСТИ ОБУЧЕНИЯ";
                     }
                     Users = new ObservableCollection<UserListCollection>
                     {
-                        new UserListCollection($"{PrsentFilterMethod}"),
+                        new UserListCollection($"{PresentText}{BenchmarkValue}"),
                     };
                     for (int i = 0; i < UsersListSortValue.Length; i++)
                     {

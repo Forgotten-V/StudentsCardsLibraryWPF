@@ -29,8 +29,8 @@
             <LineBreak />
             Выберете действие для начала работы
         </TextBlock>
-        <Button x:Name="PickFilterMethod" Grid.Column="1" Grid.Row="3" FontSize="30" Content="Просмотр списка студентов"  Command="{Binding OpenPickFilterMethodPage}"  />
-        <Button x:Name="CreateUserButton" Grid.Column="1" Grid.Row="5" FontSize="30" Content="Создать карточку студента" Command="{Binding OpenCreateUserPage}"  />
+        <Button x:Name="PickFilterMethod" Grid.Column="1" Grid.Row="3" FontSize="30" Content="Просмотр списка студентов"  Command="{Binding OpenUsersListPage}"  />
+        <Button x:Name="CreateUserButton" Grid.Column="1" Grid.Row="5" FontSize="30" Content="Создать профиль студента" Command="{Binding OpenCreateUserPage}"  />
         <Button x:Name="CloseAppButton" Grid.Column="1" Grid.Row="7" FontSize="30" Content="Закрыть приложение" Command="{Binding ShutDownApp}"  />
     </Grid>
 </Page>

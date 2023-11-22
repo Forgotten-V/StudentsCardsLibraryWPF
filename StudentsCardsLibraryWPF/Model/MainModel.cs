@@ -117,7 +117,6 @@ namespace StudentsCardsLibraryWPF.Model
                 Phone = LastUser[10]
             });
             ULManager.AddUser(User);
-
         }
 
        public void EditFilterMethod(int Number)

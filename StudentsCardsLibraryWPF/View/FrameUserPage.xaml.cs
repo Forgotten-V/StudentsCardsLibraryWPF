@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudentsCardsLibraryWPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,8 @@ namespace StudentsCardsLibraryWPF.View
         {
             InitializeComponent();
             DataContext = new ViewModel.UserPageLogicBlock();
+            //UserPageLogicBlock PreLoadedAction = new UserPageLogicBlock();
+            //PreLoadedAction.UserPagePreLoaded();
         }
     }
 }

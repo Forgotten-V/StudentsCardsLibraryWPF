@@ -30,7 +30,7 @@
             <ColumnDefinition Width="150*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Grid.ColumnSpan="3">
-            Перед началом просмотра списка студентов выберете способ их сортировки
+            Выберете желаемый способ сортировки студентов
         </TextBlock>
         <Button x:Name="Method0" Grid.Column="1" Grid.Row="3" FontSize="30" Content="Сортировать по фамилии" Grid.ColumnSpan="3" Command="{Binding OpenUsersListPage}" CommandParameter="0" />
         <Button x:Name="Method1" Grid.Column="1" Grid.Row="5" FontSize="14"  Content="Сортировать по факультету" Command="{Binding OpenUsersListPage}" CommandParameter="1" />

@@ -25,8 +25,8 @@
             <RowDefinition Height="30*"></RowDefinition>
             <RowDefinition Height="15*"></RowDefinition>
             <RowDefinition Height="30*"></RowDefinition>
-            <RowDefinition Height="45*"></RowDefinition>
-            <RowDefinition Height="15*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="50*"></RowDefinition>
             <RowDefinition Height="30*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -80,8 +80,9 @@
         </TextBlock>
         <TextBlock x:Name="PhoneInformation" Background="LightGray" Grid.Column="2" Grid.Row="12" FontSize="16" TextWrapping="Wrap" TextAlignment="Left" Grid.ColumnSpan="2" Text="{Binding Path = OutputPhone, Mode = TwoWay}"></TextBlock>
         <TextBox x:Name="InputSurname" Grid.Column="3" Grid.Row="14" FontSize="13" Margin="0,2,0,33" Grid.RowSpan="2" Text="{Binding Path = TargetToDelete, Mode = TwoWay}" ></TextBox>
-        <Button x:Name="EditUserButton" Grid.Column="1" Grid.Row="14" FontSize="20" Grid.RowSpan="2" Content="Редактировать карточку студента" Command="{Binding StartEditUser}" />
-        <Button x:Name="DeleteUserButton" Grid.Column="3" Grid.Row="15" FontSize="20" Content="Удалить карточку студента" Command="{Binding TryDeleteUser}" />
-        <Button x:Name="ExitButton" Grid.Column="1" Grid.Row="17" FontSize="20" Grid.ColumnSpan="3" Content="Вернуться в главное меню" Command="{Binding OpenMainPage}"/>
+        <Button x:Name="EditUserButton" Grid.Column="1" Grid.Row="15" FontSize="20" Content="Редактировать профиль студента" Command="{Binding StartEditUser}" />
+        <Button x:Name="DeleteUserButton" Grid.Column="3" Grid.Row="15" FontSize="20" Content="Удалить профиль студента" Command="{Binding TryDeleteUser}" />
+        <Button x:Name="ExitButton" Grid.Column="3" Grid.Row="17" FontSize="20" Content="Вернуться в главное меню" Command="{Binding OpenMainPage}"/>
+        <Button x:Name="BackToUsersListButton" Grid.Column="1" Grid.Row="17" FontSize="20" Content="К списку студентов" Command="{Binding OpenUsersListPage}"/>
     </Grid>
 </Page>
