@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\FrameAlternativeUsersList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\FrameCreateUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -30,6 +33,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="View\FrameAlternativeUsersList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\FrameCreateUser.xaml">
       <SubType>Designer</SubType>
     </Page>

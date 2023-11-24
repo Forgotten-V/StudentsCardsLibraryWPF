@@ -76,6 +76,17 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenUsersListPage;
         }
 
+        public ICommand OpenAlternativeUsersListPage
+        {
+            get { return new NavigateRelayCommand(VOpenAlternativeUsersListPage); }
+        }
+
+        private void VOpenAlternativeUsersListPage()
+        {
+            var OpenAlternativeUsersListPage = new FrameAlternativeUsersList();
+            App.Current.MainWindow.Content = OpenAlternativeUsersListPage;
+        }
+
         public ICommand OpenMainPage
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }

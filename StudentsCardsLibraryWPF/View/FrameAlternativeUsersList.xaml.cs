@@ -1,8 +1,5 @@
-﻿using StudentsCardsLibraryWPF.Model;
-using StudentsCardsLibraryWPF.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +16,11 @@ using System.Windows.Shapes;
 namespace StudentsCardsLibraryWPF.View
 {
     /// <summary>
-    /// Логика взаимодействия для FrameUsersList.xaml
+    /// Логика взаимодействия для FrameAlternativeUsersList.xaml
     /// </summary>
-    public partial class FrameUsersList : Page
+    public partial class FrameAlternativeUsersList : Page
     {
-        public FrameUsersList()
+        public FrameAlternativeUsersList()
         {
             InitializeComponent();
             DataContext = new ViewModel.UsersListLogicBlock();

@@ -33,15 +33,15 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
         public string TargetToDelete { get; set; } = "Введите фамилию пользователя для подтверждения его удаления";
 
-        public ICommand OpenUsersListPage
+        public ICommand OpenAlternativeUsersListPage
         {
-            get { return new NavigateRelayCommand(VOpenUsersListPage); }
+            get { return new NavigateRelayCommand(VOpenAlternativeUsersListPage); }
         }
 
-        private void VOpenUsersListPage()
+        private void VOpenAlternativeUsersListPage()
         {
-            var OpenUsersListPage = new FrameUsersList();
-            App.Current.MainWindow.Content = OpenUsersListPage;
+            var OpenAlternativeUsersListPage = new FrameAlternativeUsersList();
+            App.Current.MainWindow.Content = OpenAlternativeUsersListPage;
         }
 
         public ICommand OpenMainPage

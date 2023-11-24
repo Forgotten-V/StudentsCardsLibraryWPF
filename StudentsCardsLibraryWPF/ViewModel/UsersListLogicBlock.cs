@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -17,6 +18,34 @@ namespace StudentsCardsLibraryWPF.ViewModel
 {
     public class UsersListLogicBlock : INotifyPropertyChanged
     {
+
+
+
+
+        public ICommand ChangeToTable
+        {
+            get { return new NavigateRelayCommand(VChangeToTable); }
+        }
+
+        private void VChangeToTable()
+        {
+            MainModel MM = new MainModel();
+            MM.EditFilterMethod(0);
+            var OpenAlternativeUsersList = new FrameAlternativeUsersList();
+            App.Current.MainWindow.Content = OpenAlternativeUsersList;
+        }
+
+        public ICommand ChangeToList
+        {
+            get { return new NavigateRelayCommand(VChangeToList); }
+        }
+
+        private void VChangeToList()
+        {
+            var OpenUsersList = new FrameUsersList();
+            App.Current.MainWindow.Content = OpenUsersList;
+        }
+
         public ICommand OpenPickFilterMethodPage
         {
             get { return new NavigateRelayCommand(VOpenPickFilterMethodPage); }
@@ -46,6 +75,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
         public ObservableCollection<UserListCollection> Users { get; set; }
 
 
+
         RelayCommand? openUserCard;
         public RelayCommand OpenUserCard
         {
@@ -59,13 +89,14 @@ namespace StudentsCardsLibraryWPF.ViewModel
                         {
                             MainModel Model = new MainModel();
                             UsersListSortValue = Model.CreateUsersBase();
-                            UserListCollection UserInput = new UserListCollection(User.Title);
-                            string InputValue = UserInput.Title;
+                            UserListCollection UserInput = new UserListCollection(User.FIO, null, null, null, null, null, null, null, null, null, null);
+                            string InputValue = UserInput.FIO;
+                            //MessageBox.Show($"{UserInput.FIO}");
                             for (int i = 0; UsersListSortValue.Length > i; i++)
                             {
                                 if (InputValue == UsersListSortValue[i][0])
                                 {
-                                    Model.SaveUserID(Int32.Parse(UsersListSortValue[i][2])-1);
+                                    Model.SaveUserID(Int32.Parse(UsersListSortValue[i][2]) - 1);
                                     i = UsersListSortValue.Length;
                                     var OpenUserPage = new FrameUserPage();
                                     App.Current.MainWindow.Content = OpenUserPage;
@@ -75,6 +106,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
                     }));
             }
         }
+
 
         public UserListCollection? SelectedUser
         {
@@ -103,13 +135,13 @@ namespace StudentsCardsLibraryWPF.ViewModel
                     FilterMethodInformation = "Фильтрация пользователей по фамилии";
                     Users = new ObservableCollection<UserListCollection>
                     {
-                        new UserListCollection($"{UsersListSortValue[0][0]}"),
+                        new UserListCollection(UsersListSortValue[0][0], UsersListSortValue[0][3], UsersListSortValue[0][4], UsersListSortValue[0][5], UsersListSortValue[0][6], UsersListSortValue[0][7], UsersListSortValue[0][8], UsersListSortValue[0][9], UsersListSortValue[0][10], UsersListSortValue[0][11], UsersListSortValue[0][12]),
                     };
-                    for (int i = 1;  i < UsersListSortValue.Length; i++)
+                    for (int i = 1; i < UsersListSortValue.Length; i++)
                     {
-                        UserListCollection phone = new UserListCollection("");
-                        phone = new UserListCollection(UsersListSortValue[i][0]);
-                        Users.Insert(ListPosition, phone);
+                        UserListCollection user = new UserListCollection("", null, null, null, null, null, null, null, null, null, null);
+                        user = new UserListCollection(UsersListSortValue[i][0], UsersListSortValue[i][3], UsersListSortValue[i][4], UsersListSortValue[i][5], UsersListSortValue[i][6], UsersListSortValue[i][7], UsersListSortValue[i][8], UsersListSortValue[i][9], UsersListSortValue[i][10], UsersListSortValue[i][11], UsersListSortValue[i][12]);
+                        Users.Insert(ListPosition, user);
                         ListPosition++;
                     }
                 }
@@ -143,25 +175,28 @@ namespace StudentsCardsLibraryWPF.ViewModel
                     }
                     Users = new ObservableCollection<UserListCollection>
                     {
-                        new UserListCollection($"{PresentText}{BenchmarkValue}"),
+                        new UserListCollection($"{PresentText}{BenchmarkValue}", null, null, null, null, null, null, null, null, null, null),
                     };
                     for (int i = 0; i < UsersListSortValue.Length; i++)
                     {
-                        UserListCollection phone = new UserListCollection("");
+                        UserListCollection user = new UserListCollection("", null, null, null, null, null, null, null, null, null, null);
                         if (BenchmarkValue != UsersListSortValue[i][1])
                         {
                             BenchmarkValue = UsersListSortValue[i][1];
-                            phone = new UserListCollection($"{PresentText}{BenchmarkValue}");
-                            Users.Insert(ListPosition, phone);
+                            user = new UserListCollection($"{PresentText}{BenchmarkValue}", null, null, null, null, null, null, null, null, null, null);
+                            Users.Insert(ListPosition, user);
                             ListPosition++;
                         }
-                        phone = new UserListCollection(UsersListSortValue[i][0]);
-                        Users.Insert(ListPosition, phone);
+                        user = new UserListCollection(UsersListSortValue[i][0], null, null, null, null, null, null, null, null, null, null);
+                        Users.Insert(ListPosition, user);
                         ListPosition++;
                     }
                 }
             }
         }
+
+
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -196,21 +231,145 @@ namespace StudentsCardsLibraryWPF.ViewModel
             execute(parameter);
         }
     }
+
+
+
     public class UserListCollection : INotifyPropertyChanged
     {
-        private string title;
+        //private string id;
+        private string fio;
+        private string surname;
+        private string name;
+        private string lastname;
+        private string faculty;
+        private string speciality;
+        private string group;
+        private string course;
+        private string city;
+        private string email;
+        private string phone;
 
-        public UserListCollection(string title)
+        public UserListCollection(string fio, string surname, string name, string lastname, string faculty, string speciality, string group, string course, string city, string email, string phone)
         {
-            this.title = title;
+            //this.id = id;
+            this.fio = fio;
+            this.surname = surname;
+            this.name = name;
+            this.lastname = lastname;
+            this.faculty = faculty;
+            this.speciality = speciality;
+            this.group = group;
+            this.course = course;
+            this.city = city;
+            this.email = email;
+            this.phone = phone;
         }
 
-        public string Title
+        //public string ID
+        //{
+        //    get { return id; }
+        //    set
+        //    {
+        //        id = value;
+        //        OnPropertyChanged("Title");
+        //    }
+        //}
+        public string FIO
         {
-            get { return title; }
+            get { return fio; }
             set
             {
-                title = value;
+                fio = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Surname
+        {
+            get { return surname; }
+            set
+            {
+                surname = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Lastname
+        {
+            get { return lastname; }
+            set
+            {
+                fio = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Faculty
+        {
+            get { return faculty; }
+            set
+            {
+                faculty = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Speciality
+        {
+            get { return speciality; }
+            set
+            {
+                speciality = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Group
+        {
+            get { return group; }
+            set
+            {
+                group = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Course
+        {
+            get { return course; }
+            set
+            {
+                course = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string City
+        {
+            get { return city; }
+            set
+            {
+                city = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Email
+        {
+            get { return email; }
+            set
+            {
+                email = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public string Phone
+        {
+            get { return phone; }
+            set
+            {
+                phone = value;
                 OnPropertyChanged("Title");
             }
         }

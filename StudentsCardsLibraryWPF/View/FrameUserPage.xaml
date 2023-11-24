@@ -83,6 +83,6 @@
         <Button x:Name="EditUserButton" Grid.Column="1" Grid.Row="15" FontSize="20" Content="Редактировать профиль студента" Command="{Binding StartEditUser}" />
         <Button x:Name="DeleteUserButton" Grid.Column="3" Grid.Row="15" FontSize="20" Content="Удалить профиль студента" Command="{Binding TryDeleteUser}" />
         <Button x:Name="ExitButton" Grid.Column="3" Grid.Row="17" FontSize="20" Content="Вернуться в главное меню" Command="{Binding OpenMainPage}"/>
-        <Button x:Name="BackToUsersListButton" Grid.Column="1" Grid.Row="17" FontSize="20" Content="К списку студентов" Command="{Binding OpenUsersListPage}"/>
+        <Button x:Name="BackToUsersListButton" Grid.Column="1" Grid.Row="17" FontSize="20" Content="К списку студентов" Command="{Binding OpenAlternativeUsersListPage}"/>
     </Grid>
 </Page>

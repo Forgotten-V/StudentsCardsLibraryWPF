@@ -154,9 +154,7 @@ namespace StudentsCardsLibraryWPF.Model
             UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
             UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
             UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            int FilterMethod;
-            FilterMethod = Config.FilterMethod;
-            return FilterMethod;
+            return Config.FilterMethod;
         }
 
         public string [] PresentUserInformation(int UserID)
@@ -192,7 +190,8 @@ namespace StudentsCardsLibraryWPF.Model
             UserIdForView = Config.UserIDForView;
             return UserIdForView;
         }
-        public string[][] CreateUsersBase ()
+
+        public string[][] CreateUsersBase()
         {
             string[][] UsersListSortValueModel;
             string PathFiles = Directory.GetCurrentDirectory();
@@ -205,12 +204,12 @@ namespace StudentsCardsLibraryWPF.Model
             UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             int UserNumbers = User.Numbers();
-            string[] BuferValue = new string[3];
+            string[] BuferValue = new string[13];
             UsersListSortValueModel = new string[UserNumbers][];
             {
                 for (int i = 0; i < UserNumbers; i++)
                 {
-                    UsersListSortValueModel[i] = new string[3];
+                    UsersListSortValueModel[i] = new string[13];
                 }
             }
             if (Config.FilterMethod == 0)
@@ -221,6 +220,16 @@ namespace StudentsCardsLibraryWPF.Model
                     UsersListSortValueModel[i - 1][0] = TempValue.FIO;
                     UsersListSortValueModel[i - 1][1] = TempValue.Surname;
                     UsersListSortValueModel[i - 1][2] = $"{i + 1}";
+                    UsersListSortValueModel[i - 1][3] = TempValue.Surname;
+                    UsersListSortValueModel[i - 1][4] = TempValue.Name;
+                    UsersListSortValueModel[i - 1][5] = TempValue.LastName;
+                    UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
+                    UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
+                    UsersListSortValueModel[i - 1][8] = TempValue.Group;
+                    UsersListSortValueModel[i - 1][9] = TempValue.Course;
+                    UsersListSortValueModel[i - 1][10] = TempValue.City;
+                    UsersListSortValueModel[i - 1][11] = TempValue.Email;
+                    UsersListSortValueModel[i - 1][12] = TempValue.Phone;
                 }
             }
             else if (Config.FilterMethod == 1)
@@ -231,6 +240,16 @@ namespace StudentsCardsLibraryWPF.Model
                     UsersListSortValueModel[i - 1][0] = TempValue.FIO;
                     UsersListSortValueModel[i - 1][1] = TempValue.Faculty;
                     UsersListSortValueModel[i - 1][2] = $"{i + 1}";
+                    UsersListSortValueModel[i - 1][3] = TempValue.Surname;
+                    UsersListSortValueModel[i - 1][4] = TempValue.Name;
+                    UsersListSortValueModel[i - 1][5] = TempValue.LastName;
+                    UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
+                    UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
+                    UsersListSortValueModel[i - 1][8] = TempValue.Group;
+                    UsersListSortValueModel[i - 1][9] = TempValue.Course;
+                    UsersListSortValueModel[i - 1][10] = TempValue.City;
+                    UsersListSortValueModel[i - 1][11] = TempValue.Email;
+                    UsersListSortValueModel[i - 1][12] = TempValue.Phone;
                 }
             }
             else if (Config.FilterMethod == 2)
@@ -241,6 +260,16 @@ namespace StudentsCardsLibraryWPF.Model
                     UsersListSortValueModel[i - 1][0] = TempValue.FIO;
                     UsersListSortValueModel[i - 1][1] = TempValue.Speciality;
                     UsersListSortValueModel[i - 1][2] = $"{i + 1}";
+                    UsersListSortValueModel[i - 1][3] = TempValue.Surname;
+                    UsersListSortValueModel[i - 1][4] = TempValue.Name;
+                    UsersListSortValueModel[i - 1][5] = TempValue.LastName;
+                    UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
+                    UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
+                    UsersListSortValueModel[i - 1][8] = TempValue.Group;
+                    UsersListSortValueModel[i - 1][9] = TempValue.Course;
+                    UsersListSortValueModel[i - 1][10] = TempValue.City;
+                    UsersListSortValueModel[i - 1][11] = TempValue.Email;
+                    UsersListSortValueModel[i - 1][12] = TempValue.Phone;
                 }
             }
             else if (Config.FilterMethod == 3)
@@ -251,6 +280,16 @@ namespace StudentsCardsLibraryWPF.Model
                     UsersListSortValueModel[i - 1][0] = TempValue.FIO;
                     UsersListSortValueModel[i - 1][1] = TempValue.Group;
                     UsersListSortValueModel[i - 1][2] = $"{i + 1}";
+                    UsersListSortValueModel[i - 1][3] = TempValue.Surname;
+                    UsersListSortValueModel[i - 1][4] = TempValue.Name;
+                    UsersListSortValueModel[i - 1][5] = TempValue.LastName;
+                    UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
+                    UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
+                    UsersListSortValueModel[i - 1][8] = TempValue.Group;
+                    UsersListSortValueModel[i - 1][9] = TempValue.Course;
+                    UsersListSortValueModel[i - 1][10] = TempValue.City;
+                    UsersListSortValueModel[i - 1][11] = TempValue.Email;
+                    UsersListSortValueModel[i - 1][12] = TempValue.Phone;
                 }
             }
             else if (Config.FilterMethod == 4)
@@ -261,9 +300,18 @@ namespace StudentsCardsLibraryWPF.Model
                     UsersListSortValueModel[i - 1][0] = TempValue.FIO;
                     UsersListSortValueModel[i - 1][1] = TempValue.Course;
                     UsersListSortValueModel[i - 1][2] = $"{i + 1}";
+                    UsersListSortValueModel[i - 1][3] = TempValue.Surname;
+                    UsersListSortValueModel[i - 1][4] = TempValue.Name;
+                    UsersListSortValueModel[i - 1][5] = TempValue.LastName;
+                    UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
+                    UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
+                    UsersListSortValueModel[i - 1][8] = TempValue.Group;
+                    UsersListSortValueModel[i - 1][9] = TempValue.Course;
+                    UsersListSortValueModel[i - 1][10] = TempValue.City;
+                    UsersListSortValueModel[i - 1][11] = TempValue.Email;
+                    UsersListSortValueModel[i - 1][12] = TempValue.Phone;
                 }
             }
-
             for (int i = 0; i < UserNumbers; i++)//Цикл "пузырьковой" сортировки карточек студентов в зависимости от необходимого метода сортировки.
             {
                 for (int j = i + 1; j < UserNumbers; j++)
@@ -273,12 +321,42 @@ namespace StudentsCardsLibraryWPF.Model
                         BuferValue[0] = UsersListSortValueModel[j][0];
                         BuferValue[1] = UsersListSortValueModel[j][1];
                         BuferValue[2] = UsersListSortValueModel[j][2];
+                        BuferValue[3] = UsersListSortValueModel[j][3];
+                        BuferValue[4] = UsersListSortValueModel[j][4];
+                        BuferValue[5] = UsersListSortValueModel[j][5];
+                        BuferValue[6] = UsersListSortValueModel[j][6];
+                        BuferValue[7] = UsersListSortValueModel[j][7];
+                        BuferValue[8] = UsersListSortValueModel[j][8];
+                        BuferValue[9] = UsersListSortValueModel[j][9];
+                        BuferValue[10] = UsersListSortValueModel[j][10];
+                        BuferValue[11] = UsersListSortValueModel[j][11];
+                        BuferValue[12] = UsersListSortValueModel[j][12];
                         UsersListSortValueModel[j][0] = UsersListSortValueModel[i][0];
                         UsersListSortValueModel[j][1] = UsersListSortValueModel[i][1];
                         UsersListSortValueModel[j][2] = UsersListSortValueModel[i][2];
+                        UsersListSortValueModel[j][3] = UsersListSortValueModel[i][3];
+                        UsersListSortValueModel[j][4] = UsersListSortValueModel[i][4];
+                        UsersListSortValueModel[j][5] = UsersListSortValueModel[i][5];
+                        UsersListSortValueModel[j][6] = UsersListSortValueModel[i][6];
+                        UsersListSortValueModel[j][7] = UsersListSortValueModel[i][7];
+                        UsersListSortValueModel[j][8] = UsersListSortValueModel[i][8];
+                        UsersListSortValueModel[j][9] = UsersListSortValueModel[i][9];
+                        UsersListSortValueModel[j][10] = UsersListSortValueModel[i][10];
+                        UsersListSortValueModel[j][11] = UsersListSortValueModel[i][11];
+                        UsersListSortValueModel[j][12] = UsersListSortValueModel[i][12];
                         UsersListSortValueModel[i][0] = BuferValue[0];
                         UsersListSortValueModel[i][1] = BuferValue[1];
                         UsersListSortValueModel[i][2] = BuferValue[2];
+                        UsersListSortValueModel[i][3] = BuferValue[3];
+                        UsersListSortValueModel[i][4] = BuferValue[4];
+                        UsersListSortValueModel[i][5] = BuferValue[5];
+                        UsersListSortValueModel[i][6] = BuferValue[6];
+                        UsersListSortValueModel[i][7] = BuferValue[7];
+                        UsersListSortValueModel[i][8] = BuferValue[8];
+                        UsersListSortValueModel[i][9] = BuferValue[9];
+                        UsersListSortValueModel[i][10] = BuferValue[10];
+                        UsersListSortValueModel[i][11] = BuferValue[11];
+                        UsersListSortValueModel[i][12] = BuferValue[12];
                     }
                 }
             }
