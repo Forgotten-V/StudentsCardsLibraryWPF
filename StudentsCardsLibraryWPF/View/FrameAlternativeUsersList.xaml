@@ -31,7 +31,7 @@
             <ColumnDefinition Width="30*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <DataGrid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" ItemsSource="{Binding Users}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedUser}" >
+        <DataGrid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" IsReadOnly="True" ItemsSource="{Binding Users}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedUser}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Полное наименование" Binding="{Binding Path=FIO}" />
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Surname}" />

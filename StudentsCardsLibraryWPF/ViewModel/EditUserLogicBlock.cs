@@ -1,4 +1,5 @@
-﻿using StudentsCardsLibraryWPF.Model;
+﻿using ModelClassLibrary;
+using StudentsCardsLibraryWPF.Model;
 using StudentsCardsLibraryWPF.View;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ using System.Windows.Input;
 
 namespace StudentsCardsLibraryWPF.ViewModel
 {
-    public class EditUserLogicBlock
+    public class EditUserLogicBlock     //Класс, отвечающий за логику взаимодейстивия с окном EditUser, и в целом на логику редактирования пользователя.
     {
-        public string[] UsersInformation = new string[11];
-        public string InputSurname { get; set; } = "";
+        public string[] UsersInformation = new string[11];      //Массив, собирающий в себя информацию о пользователе для её последующего вывода.
+        public string InputSurname { get; set; } = "";          //Переменные, которм привязаны TextBox из XAML файла.
         public string InputName { get; set; } = "";
         public string InputLastname { get; set; } = "";
         public string InputFaculty { get; set; } = "";
@@ -23,13 +24,14 @@ namespace StudentsCardsLibraryWPF.ViewModel
         public string InputCity { get; set; } = "";
         public string InputEmail { get; set; } = "";
         public string InputPhone { get; set; } = "";
+        //public int UserID {get; set;} = 0;       В теории эту переменную можно так же использовать для вывода информации о ID пользователя.
 
-        int UserID;
-        public EditUserLogicBlock() 
+        public EditUserLogicBlock()         //Стартовое действие класса при его инициализации - присвоение значений
+                                            //переменным, которые будут выведены в графическом интерфейсе для просмотра.
         {
             MainModel Model = new MainModel();
-            UserID = Model.GetUserIDForView();
-            UsersInformation = Model.PresentUserInformation(UserID);
+            //UserID = GlobalVariables.UserID;
+            UsersInformation = Model.PresentUserInformation(GlobalVariables.UserID);
             InputSurname = UsersInformation[1];
             InputName = UsersInformation[2];
             InputLastname = UsersInformation[3];
@@ -41,29 +43,39 @@ namespace StudentsCardsLibraryWPF.ViewModel
             InputEmail = UsersInformation[9];
             InputPhone = UsersInformation[10];
         }
-        public ICommand OpenMainPage
+
+        public ICommand OpenMainPage        //Команда и её функция, открывающая главное окно программы.
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }
         }
-
         private void VOpenMainPage()
         {
             var OpenStartPage = new StartPage();
             App.Current.MainWindow.Content = OpenStartPage;
         }
 
-        public ICommand OpenUsersListPage
+        public ICommand OpenUsersListPage       //Команда и её функция, открывающая список всех пользователей.
         {
             get { return new NavigateRelayCommand(VOpenUsersListPage); }
         }
 
         private void VOpenUsersListPage()
         {
-            var OpenUsersListPage = new FrameUsersList();
-            App.Current.MainWindow.Content = OpenUsersListPage;
+            if (GlobalVariables.WindowMode == 0)            //Открывает список пользователей, вид которого зависит
+                                                            //от последнего выбранного способа его отображения.
+            {
+                GlobalVariables.FilterMethod = 0;
+                var OpenUsersListPage = new FrameAlternativeUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
+            }
+            else if (GlobalVariables.WindowMode == 1)
+            {
+                var OpenUsersListPage = new FrameUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
+            }
         }
 
-        public ICommand OpenUserPage
+        public ICommand OpenUserPage            //Команда и её функция, возвращающая на страницу редактируемого пользователя.
         {
             get { return new NavigateRelayCommand(VOpenUserPage); }
         }
@@ -74,24 +86,35 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenUserPage;
         }
 
-        public ICommand SaveChanges
+        public ICommand SaveChanges                 //Команда и её функция, сохраняющая изменения информации о пользователе
         {
             get { return new NavigateRelayCommand(VSaveChanges); }
         }
 
         private void VSaveChanges()
         {
-            if (InputSurname == "" || InputName == "" || InputLastname == "" || InputFaculty == "" || InputSpeciality == "" || InputGroup == "" || InputCourse == "" || InputCity == "" || InputEmail == "" || InputPhone == "")
+            if (InputSurname == "" || InputName == "" || InputLastname == "" || InputFaculty == "" || InputSpeciality == "" || InputGroup == "" || InputCourse == "" || InputCity == "" || InputEmail == "" || InputPhone == "")        //Условный оператор, проверяющий отсутствие пустых текстовых блоков и выводящий предупреждение в случае их наличия.
             {
                 MessageBox.Show("Для завершения редактирования необходимо заполнить все поля.");
             }
             else
             {
                 MainModel Model = new MainModel();
-                Model.EditUser(InputSurname, InputName, InputLastname, InputFaculty, InputSpeciality, InputGroup, InputCourse, InputCity, InputEmail, InputPhone);
+                Model.EditUser(InputSurname, InputName, InputLastname, InputFaculty, InputSpeciality, InputGroup, InputCourse, InputCity, InputEmail, InputPhone);      //В случае отсутствия пустых текстовых блоков вызывает метод для редактирования пользователя и загружает в него все необходимые данные.
                 MessageBox.Show($"Информация о пользователе {InputSurname} {InputName[0]}. {InputLastname[0]}. успешно обновлена.");
-                var OpenUsersListPage = new FrameUsersList();
-                App.Current.MainWindow.Content = OpenUsersListPage;
+                if (GlobalVariables.WindowMode == 0)            //По завершению редактирования открывает список пользователей, вид
+                                                                //которого зависит от последнего выбранного способа его отображения.
+                {
+                    GlobalVariables.FilterMethod = 0;           //Скорее всего, метод фильтрации уже был установлен как 0, но лишний раз сделать это не
+                                                                //помешает - по умолчанию метод сортировки в таблице только по фамилии
+                    var OpenUsersListPage = new FrameAlternativeUsersList();
+                    App.Current.MainWindow.Content = OpenUsersListPage;
+                }
+                else if (GlobalVariables.WindowMode == 1)
+                {
+                    var OpenUsersListPage = new FrameUsersList();
+                    App.Current.MainWindow.Content = OpenUsersListPage;
+                }
             }
         }
     }

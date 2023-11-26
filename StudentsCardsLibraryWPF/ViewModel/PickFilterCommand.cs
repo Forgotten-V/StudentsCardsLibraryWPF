@@ -1,4 +1,5 @@
-﻿using StudentsCardsLibraryWPF.Model;
+﻿using ModelClassLibrary;
+using StudentsCardsLibraryWPF.Model;
 using StudentsCardsLibraryWPF.View;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ using System.Windows.Input;
 
 namespace StudentsCardsLibraryWPF.ViewModel
 {
-    public class PickFilterVM : INotifyPropertyChanged
+    public class PickFilterVM : INotifyPropertyChanged      //Класс, отвечающий за функциональность страницы PickFilterMethod. Ввиду необходимости для его
+                                                            //функционирования специализированного класса-комманды был вынесен вместе с ним в отдельный класс.
     {
         private string textField;
-        public string FilterMetodString
+        public string FilterMetodString         //У каждой кнопки метода фильтрации есть свой параметр, обозначающий способ фильтрации.
+                                                //При нажатии на неё значение этого параметра присваивается этой переменной
         {
             get { return textField; }
             set
@@ -41,13 +44,13 @@ namespace StudentsCardsLibraryWPF.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public ICommand OpenUsersListPage { get; }
-
         public PickFilterVM()
         {
             OpenUsersListPage = new PickFilterCommand(SetText);
         }
 
-        private void SetText(object parameter)
+        private void SetText(object parameter)      //Функция команды рассчитана на обязательное получение параметра. Поэтому
+                                                    //даже у кнопке, отвечающей за закрытие окна, был прописан свой параметр.
         {
             string text = parameter as string;
             if (!string.IsNullOrEmpty(text))
@@ -61,8 +64,9 @@ namespace StudentsCardsLibraryWPF.ViewModel
                 }
                 else 
                 {
-                    MainModel PickFilter = new MainModel();
-                    PickFilter.EditFilterMethod(FilterMethod);
+                    //MainModel PickFilter = new MainModel();
+                    //PickFilter.EditFilterMethod(FilterMethod);
+                    GlobalVariables.FilterMethod = FilterMethod;
                     var OpenUsersListPage = new FrameUsersList();
                     App.Current.MainWindow.Content = OpenUsersListPage;
                 }
@@ -70,7 +74,8 @@ namespace StudentsCardsLibraryWPF.ViewModel
         }
     }
 
-    public class PickFilterCommand : ICommand
+    public class PickFilterCommand : ICommand           //Та самая специализированная класс-команда. Очень ограничена в своём применении, поэтому
+                                                        //в текущем приложении подходит только для выбора метода фильтрации.
     {
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;

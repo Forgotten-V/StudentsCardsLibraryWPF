@@ -1,4 +1,5 @@
-﻿using StudentsCardsLibraryWPF.Model;
+﻿using ModelClassLibrary;
+using StudentsCardsLibraryWPF.Model;
 using StudentsCardsLibraryWPF.View;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,11 @@ using System.Windows.Navigation;
 
 namespace StudentsCardsLibraryWPF.ViewModel
 {
-    public class MainVM : INotifyPropertyChanged
+    public class MainVM : INotifyPropertyChanged        //Класс, представляющий из себя главный ViewModel программы. Однако вскоре он
+                                                        //стал отвечать только за стартовую страницу и страницу создания пользователей,
+                                                        //ввиду отсутствия необходимости делать внутри них предзагрузку..
     {
-
-        public string InputSurname { get; set; } = "";
+        public string InputSurname { get; set; } = "";      //Переменные, которые принимают данные для создания новой страницы пользователя.
         public string InputName { get; set; } = "";
         public string InputLastname { get; set; } = "";
         public string InputFaculty { get; set; } = "";
@@ -33,7 +35,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
         public string InputPhone { get; set; } = "";
 
 
-        public ICommand ShutDownApp
+        public ICommand ShutDownApp         //Команда и её функция, полностью выключающая приложение.
         {
             get { return new NavigateRelayCommand(VShutDownApp); }
         }
@@ -43,7 +45,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
             Application.Current.Shutdown();
         }
 
-        public ICommand OpenCreateUserPage
+        public ICommand OpenCreateUserPage      //Команда и её функция, открывающая страницу создания пользователя.
         {
             get { return new NavigateRelayCommand(VOpenCreateUserPage); }
         }
@@ -54,40 +56,73 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenCreateUser;
         }
 
-        public ICommand OpenPickFilterMethodPage
+        //public ICommand OpenPickFilterMethodPage            //Команда и её функция, открывающая страниуц выбора метода сортировки. Сейчас не нужна, в виду того
+        //                                                    //что теперь сразу открывается список пользователей без предварительного выбора способа сортировки.
+        //{
+        //    get { return new NavigateRelayCommand(VOpenPickFilterMethodPage); }
+        //}
+
+        //private void VOpenPickFilterMethodPage()
+        //{
+        //    var OpenPickFilterMethod = new FramePickFilterMethod();
+        //    App.Current.MainWindow.Content = OpenPickFilterMethod;
+        //}
+
+        public ICommand HotOpenUsersPage        //Команда и её функция, открывающая страницу последнего выбранного пользователя.
         {
-            get { return new NavigateRelayCommand(VOpenPickFilterMethodPage); }
+            get { return new NavigateRelayCommand(VHotOpenUsersPage); }
         }
 
-        private void VOpenPickFilterMethodPage()
+        private void VHotOpenUsersPage()        //В случае, если в текущей сесси ещё не было открыто профиля
+                                                //пользователя, или он был удалён, выведет об этом
+                                                //оповещение и предотвратит появление ошибки.
         {
-            var OpenPickFilterMethod = new FramePickFilterMethod();
-            App.Current.MainWindow.Content = OpenPickFilterMethod;
+            if (GlobalVariables.UserID == 0)
+            {
+                MessageBox.Show("В этой сесси ещё не открывался пользовательский профиль");
+            }
+            else if (GlobalVariables.UserID == -1)
+            {
+                MessageBox.Show("Этот профиль был удалён");
+            }
+            else
+            {
+                var OpenUserPage = new FrameUserPage();
+                App.Current.MainWindow.Content = OpenUserPage;
+            }
         }
 
-        public ICommand OpenUsersListPage
+        public ICommand OpenUsersListPage       //Команда и её функция, открывающая список пользователей.
         {
             get { return new NavigateRelayCommand(VOpenUsersListPage); }
         }
 
         private void VOpenUsersListPage()
         {
-            var OpenUsersListPage = new FrameUsersList();
-            App.Current.MainWindow.Content = OpenUsersListPage;
+            MainModel Model = new MainModel();
+            if (Model.GetUsersNumbers() == 0)                   //В случае, если в базе данных ещё не было создано ни одного пользователя, программа
+                                                                //ничего не откроет и выведет оповещение о пустой базе пользователей.
+            {
+                MessageBox.Show("В базе данных ещё не было создано пользователей");
+            }
+            else
+            {
+                if (GlobalVariables.WindowMode == 0)            //Открывает список пользователей, вид которого зависит
+                                                                //от последнего выбранного способа его отображения.
+                {
+                    GlobalVariables.FilterMethod = 0;
+                    var OpenUsersListPage = new FrameAlternativeUsersList();
+                    App.Current.MainWindow.Content = OpenUsersListPage;
+                }
+                else if (GlobalVariables.WindowMode == 1)
+                {
+                    var OpenUsersListPage = new FrameUsersList();
+                    App.Current.MainWindow.Content = OpenUsersListPage;
+                }
+            }
         }
 
-        public ICommand OpenAlternativeUsersListPage
-        {
-            get { return new NavigateRelayCommand(VOpenAlternativeUsersListPage); }
-        }
-
-        private void VOpenAlternativeUsersListPage()
-        {
-            var OpenAlternativeUsersListPage = new FrameAlternativeUsersList();
-            App.Current.MainWindow.Content = OpenAlternativeUsersListPage;
-        }
-
-        public ICommand OpenMainPage
+        public ICommand OpenMainPage            //Команда и её функция, открывающая главное окно программы.
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }
         }
@@ -98,25 +133,6 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenStartPage;
         }
 
-        public ICommand StartCreateUser
-        {
-            get { return new NavigateRelayCommand(VStartCreateUser); }
-        }
-
-        private void VStartCreateUser()
-        {
-            if (InputSurname == "" || InputName == "" || InputLastname == "" || InputFaculty == "" || InputSpeciality == "" || InputGroup == "" || InputCourse == "" || InputCity == "" || InputEmail == "" || InputPhone == "")
-            {
-                MessageBox.Show("Заполните все поля, для создания карточки студента."); 
-            }
-            else
-            {
-                MainModel NewUser = new MainModel();
-                NewUser.CreateNewUser(InputSurname, InputName, InputLastname, InputFaculty, InputSpeciality, InputGroup, InputCourse, InputCity, InputEmail, InputPhone);
-                var OpenStartPage = new StartPage();
-                App.Current.MainWindow.Content = OpenStartPage;
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

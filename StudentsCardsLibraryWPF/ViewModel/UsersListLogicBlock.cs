@@ -1,4 +1,5 @@
-﻿using StudentsCardsLibraryWPF.Model;
+﻿using ModelClassLibrary;
+using StudentsCardsLibraryWPF.Model;
 using StudentsCardsLibraryWPF.View;
 using System;
 using System.Collections;
@@ -16,37 +17,40 @@ using System.Xml.Linq;
 
 namespace StudentsCardsLibraryWPF.ViewModel
 {
-    public class UsersListLogicBlock : INotifyPropertyChanged
+    public class UsersListLogicBlock : INotifyPropertyChanged       //Класс, отвечающий сразу за отображения списка пользователей сразу на двух страницах.
+                                                                    //Также имеет уникальный класс-команду, позволяющий это реализовывать..
     {
 
-
-
-
-        public ICommand ChangeToTable
+        public ICommand ChangeToTable       //Команда и её функция, меняющая способ отображения пользователей на "табличный" вариант.
         {
             get { return new NavigateRelayCommand(VChangeToTable); }
         }
 
         private void VChangeToTable()
         {
-            MainModel MM = new MainModel();
-            MM.EditFilterMethod(0);
+            //MainModel MM = new MainModel();
+            //MM.EditFilterMethod(0);
+            GlobalVariables.WindowMode = 0;         //Глобальная смена отображения окна, чтобы открывая список пользователей из любого окна
+                                                    //программы появлялся последний выбранный вариант отображения списка пользователей.
+            GlobalVariables.FilterMethod = 0;       //Отображение пользователей в таблице корректно работает только с сортировкой по фамилям, поэтому принудительно меняем способ сортировки.
             var OpenAlternativeUsersList = new FrameAlternativeUsersList();
             App.Current.MainWindow.Content = OpenAlternativeUsersList;
         }
 
-        public ICommand ChangeToList
+        public ICommand ChangeToList        //Команда и её функция, меняющая способ отображения пользователей на "списочный" вариант.
         {
             get { return new NavigateRelayCommand(VChangeToList); }
         }
 
         private void VChangeToList()
         {
+            GlobalVariables.WindowMode = 1;         //Глобальная смена отображения окна, чтобы открывая список пользователей из любого окна
+                                                    //программы появлялся последний выбранный вариант отображения списка пользователей.
             var OpenUsersList = new FrameUsersList();
             App.Current.MainWindow.Content = OpenUsersList;
         }
 
-        public ICommand OpenPickFilterMethodPage
+        public ICommand OpenPickFilterMethodPage        //Команда и её функция, открывающая окно выбора способа фильтрации пользователей.
         {
             get { return new NavigateRelayCommand(VOpenPickFilterMethodPage); }
         }
@@ -56,7 +60,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
             var OpenPickFilterMethod = new FramePickFilterMethod();
             App.Current.MainWindow.Content = OpenPickFilterMethod;
         }
-        public ICommand OpenMainPage
+        public ICommand OpenMainPage            //Команда и её функция, открывающая главное окно программы.
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }
         }
@@ -76,13 +80,13 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
 
 
-        RelayCommand? openUserCard;
-        public RelayCommand OpenUserCard
+        UsersListCommand? openUserCard;
+        public UsersListCommand OpenUserCard
         {
             get
             {
                 return openUserCard ??
-                    (openUserCard = new RelayCommand(obj =>
+                    (openUserCard = new UsersListCommand(obj =>
                     {
                         UserListCollection? User = obj as UserListCollection;
                         if (User != null)
@@ -96,8 +100,9 @@ namespace StudentsCardsLibraryWPF.ViewModel
                             {
                                 if (InputValue == UsersListSortValue[i][0])
                                 {
-                                    Model.SaveUserID(Int32.Parse(UsersListSortValue[i][2]) - 1);
-                                    i = UsersListSortValue.Length;
+                                    GlobalVariables.UserID = Int32.Parse(UsersListSortValue[i][2]) - 1; //Сохранение ID выбранного пользователя
+                                    //Model.SaveUserID(Int32.Parse(UsersListSortValue[i][2]) - 1);      //Старый вариант сохранения ID пользователя в json файл
+                                    i = UsersListSortValue.Length;//Остановка цикла
                                     var OpenUserPage = new FrameUserPage();
                                     App.Current.MainWindow.Content = OpenUserPage;
                                 }
@@ -118,79 +123,74 @@ namespace StudentsCardsLibraryWPF.ViewModel
             }
         }
 
-        public UsersListLogicBlock()
+        public UsersListLogicBlock()       //При открытии окна со списком пользователей происходит инициализация класса, где в
+                                           //зависимости от выбранного метода фильтрации подготавливаются необходимые данные
+                                           //для отображения, а также присваиваются значения переменным с информацией о пользователях.
         {
             MainModel Model = new MainModel();
             UsersListSortValue = Model.CreateUsersBase();
-            int FilterMethod = Model.GetFilterMethod();
+            int FilterMethod = GlobalVariables.FilterMethod;
             int ListPosition = 1;
-            if (UsersListSortValue.Length == 0)
+            if (FilterMethod == 0)
             {
-                MessageBox.Show("В базе данных ещё не было создано пользователей");
-            }
-            else
-            {
-                if (FilterMethod == 0)
-                {
-                    FilterMethodInformation = "Фильтрация пользователей по фамилии";
-                    Users = new ObservableCollection<UserListCollection>
+                FilterMethodInformation = "Фильтрация пользователей по фамилии";
+                Users = new ObservableCollection<UserListCollection>
                     {
                         new UserListCollection(UsersListSortValue[0][0], UsersListSortValue[0][3], UsersListSortValue[0][4], UsersListSortValue[0][5], UsersListSortValue[0][6], UsersListSortValue[0][7], UsersListSortValue[0][8], UsersListSortValue[0][9], UsersListSortValue[0][10], UsersListSortValue[0][11], UsersListSortValue[0][12]),
                     };
-                    for (int i = 1; i < UsersListSortValue.Length; i++)
-                    {
-                        UserListCollection user = new UserListCollection("", null, null, null, null, null, null, null, null, null, null);
-                        user = new UserListCollection(UsersListSortValue[i][0], UsersListSortValue[i][3], UsersListSortValue[i][4], UsersListSortValue[i][5], UsersListSortValue[i][6], UsersListSortValue[i][7], UsersListSortValue[i][8], UsersListSortValue[i][9], UsersListSortValue[i][10], UsersListSortValue[i][11], UsersListSortValue[i][12]);
-                        Users.Insert(ListPosition, user);
-                        ListPosition++;
-                    }
-                }
-                else
+                for (int i = 1; i < UsersListSortValue.Length; i++)
                 {
-                    string PresentText = "";//Переменная, выступающая шаблоном выводимого текста для разделения критериев сортировки.
-                    string BenchmarkValue = "";//Переменная, использующая в качестве эталона сортируемого параметра.
-                    if (FilterMethod == 1)
-                    {
-                        FilterMethodInformation = "Фильтрация пользователей по факультету";
-                        BenchmarkValue = UsersListSortValue[0][1];
-                        PresentText = "СТУДЕНТЫ ФАКУЛЬТЕТА: ";
-                    }
-                    else if (FilterMethod == 2)
-                    {
-                        FilterMethodInformation = "Фильтрация пользователей по специальности";
-                        BenchmarkValue = UsersListSortValue[0][1];
-                        PresentText = "СТУДЕНТЫ СПЕЦИАЛЬНОСТИ: ";
-                    }
-                    else if (FilterMethod == 3)
-                    {
-                        FilterMethodInformation = "Фильтрация пользователей по учебной группе";
-                        BenchmarkValue = UsersListSortValue[0][1];
-                        PresentText = "СТУДЕНТЫ УЧЕБНОЙ ГРУППЫ ГРУППЫ: ";
-                    }
-                    else if (FilterMethod == 4)
-                    {
-                        FilterMethodInformation = "Фильтрация пользователей по курсу обучения";
-                        BenchmarkValue = UsersListSortValue[0][1];
-                        PresentText = "СТУДЕНТЫ КУРСА: ";
-                    }
-                    Users = new ObservableCollection<UserListCollection>
+                    UserListCollection user = new UserListCollection("", null, null, null, null, null, null, null, null, null, null);
+                    user = new UserListCollection(UsersListSortValue[i][0], UsersListSortValue[i][3], UsersListSortValue[i][4], UsersListSortValue[i][5], UsersListSortValue[i][6], UsersListSortValue[i][7], UsersListSortValue[i][8], UsersListSortValue[i][9], UsersListSortValue[i][10], UsersListSortValue[i][11], UsersListSortValue[i][12]);
+                    Users.Insert(ListPosition, user);
+                    ListPosition++;
+                }
+            }
+            else
+            {
+                string PresentText = "";//Переменная, выступающая шаблоном выводимого текста для разделения критериев сортировки.
+                string BenchmarkValue = "";//Переменная, использующая в качестве эталона сортируемого параметра.
+                if (FilterMethod == 1)
+                {
+                    FilterMethodInformation = "Фильтрация пользователей по факультету";
+                    BenchmarkValue = UsersListSortValue[0][1];
+                    PresentText = "СТУДЕНТЫ ФАКУЛЬТЕТА: ";
+                }
+                else if (FilterMethod == 2)
+                {
+                    FilterMethodInformation = "Фильтрация пользователей по специальности";
+                    BenchmarkValue = UsersListSortValue[0][1];
+                    PresentText = "СТУДЕНТЫ СПЕЦИАЛЬНОСТИ: ";
+                }
+                else if (FilterMethod == 3)
+                {
+                    FilterMethodInformation = "Фильтрация пользователей по учебной группе";
+                    BenchmarkValue = UsersListSortValue[0][1];
+                    PresentText = "СТУДЕНТЫ УЧЕБНОЙ ГРУППЫ ГРУППЫ: ";
+                }
+                else if (FilterMethod == 4)
+                {
+                    FilterMethodInformation = "Фильтрация пользователей по курсу обучения";
+                    BenchmarkValue = UsersListSortValue[0][1];
+                    PresentText = "СТУДЕНТЫ КУРСА: ";
+                }
+                Users = new ObservableCollection<UserListCollection>
                     {
                         new UserListCollection($"{PresentText}{BenchmarkValue}", null, null, null, null, null, null, null, null, null, null),
                     };
-                    for (int i = 0; i < UsersListSortValue.Length; i++)
+                for (int i = 0; i < UsersListSortValue.Length; i++)
+                {
+                    UserListCollection user = new UserListCollection("", null, null, null, null, null, null, null, null, null, null);
+                    if (BenchmarkValue != UsersListSortValue[i][1])
                     {
-                        UserListCollection user = new UserListCollection("", null, null, null, null, null, null, null, null, null, null);
-                        if (BenchmarkValue != UsersListSortValue[i][1])
-                        {
-                            BenchmarkValue = UsersListSortValue[i][1];
-                            user = new UserListCollection($"{PresentText}{BenchmarkValue}", null, null, null, null, null, null, null, null, null, null);
-                            Users.Insert(ListPosition, user);
-                            ListPosition++;
-                        }
-                        user = new UserListCollection(UsersListSortValue[i][0], null, null, null, null, null, null, null, null, null, null);
+                        BenchmarkValue = UsersListSortValue[i][1];
+                        user = new UserListCollection($"{PresentText}{BenchmarkValue}", null, null, null, null, null, null, null, null, null, null);
                         Users.Insert(ListPosition, user);
                         ListPosition++;
                     }
+                    user = new UserListCollection(UsersListSortValue[i][0], null, null, null, null, null, null, null, null, null, null);
+                    Users.Insert(ListPosition, user);
+                    ListPosition++;
                 }
             }
         }
@@ -207,7 +207,8 @@ namespace StudentsCardsLibraryWPF.ViewModel
     }
 
 
-    public class RelayCommand : ICommand
+    public class UsersListCommand : ICommand        //Класс-команда, особенностью которого является возможность передавать
+                                                    //ФИО выделенного пользователя и передавать её в качестве параметра.
     {
         Action<object?> execute;
         Func<object?, bool>? canExecute;
@@ -217,7 +218,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
+        public UsersListCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;
@@ -234,7 +235,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
 
 
-    public class UserListCollection : INotifyPropertyChanged
+    public class UserListCollection : INotifyPropertyChanged        //Коллекция, из которой берутся данные для отображения пользователей.
     {
         //private string id;
         private string fio;

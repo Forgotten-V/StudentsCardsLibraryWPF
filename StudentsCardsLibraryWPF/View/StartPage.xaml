@@ -11,13 +11,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"></RowDefinition>
             <RowDefinition Height="70*"></RowDefinition>
-            <RowDefinition Height="60*"></RowDefinition>
+            <RowDefinition Height="40*"></RowDefinition>
             <RowDefinition Height="70*"></RowDefinition>
             <RowDefinition Height="30*"></RowDefinition>
             <RowDefinition Height="70*"></RowDefinition>
             <RowDefinition Height="30*"></RowDefinition>
             <RowDefinition Height="70*"></RowDefinition>
-            <RowDefinition Height="150*"></RowDefinition>
+            <RowDefinition Height="30*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150*"></ColumnDefinition>
@@ -29,8 +31,9 @@
             <LineBreak />
             Выберете действие для начала работы
         </TextBlock>
-        <Button x:Name="PickFilterMethod" Grid.Column="1" Grid.Row="3" FontSize="30" Content="Просмотр списка студентов"  Command="{Binding OpenAlternativeUsersListPage}"  />
-        <Button x:Name="CreateUserButton" Grid.Column="1" Grid.Row="5" FontSize="30" Content="Создать профиль студента" Command="{Binding OpenCreateUserPage}"  />
-        <Button x:Name="CloseAppButton" Grid.Column="1" Grid.Row="7" FontSize="30" Content="Закрыть приложение" Command="{Binding ShutDownApp}"  />
+        <Button x:Name="PickFilterMethod" Grid.Column="1" Grid.Row="3" FontSize="30" Content="Просмотр списка студентов"  Command="{Binding OpenUsersListPage}"  />
+        <Button x:Name="LastUserButton" Grid.Column="1" Grid.Row="5" FontSize="30" Content="Последний открытый профиль" Command="{Binding HotOpenUsersPage}"  />
+        <Button x:Name="CreateUserButton" Grid.Column="1" Grid.Row="7" FontSize="30" Content="Создать профиль студента" Command="{Binding OpenCreateUserPage}"  />
+        <Button x:Name="CloseAppButton" Grid.Column="1" Grid.Row="9" FontSize="30" Content="Закрыть приложение" Command="{Binding ShutDownApp}"  />
     </Grid>
 </Page>

@@ -9,7 +9,8 @@ namespace StudentsCardsLibraryWPF.ViewModel
 {
 
 
-    public class NavigateRelayCommand : ICommand
+    public class NavigateRelayCommand : ICommand        //Базовый класс-комманда. Ввиду своей универсальности и
+                                                        //простоты справляется с большинством задач в приложении.
     {
         private Action action;
         private Action<object> _execute;

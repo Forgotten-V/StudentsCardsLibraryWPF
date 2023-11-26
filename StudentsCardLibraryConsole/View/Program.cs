@@ -11,27 +11,17 @@ using StudentsCardLibraryConsole.ViewModel;
 
 MainVM ViewModel = new MainVM();
 
-
-
-var AddRussian = new JsonSerializerOptions
+var AddRussian = new JsonSerializerOptions          //Параметр, добавляющий возможность записывать файлы JSON с использованием кирилици. Если честно, сложно
+                                                    //представить, к какому элементу MVVM его отнести. Поэтому пускай останется здесь. Да и в целом перевод
+                                                    //консольного приложения на паттерн MVVM довольно спорная затея.
 {
     Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
     WriteIndented = true
 };
 
-string UserLibraryPath = Directory.GetCurrentDirectory();
-UserLibraryPath = UserLibraryPath.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-UserLibraryPath = UserLibraryPath + "\\UserLibrary.json";
-UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
-UserLibrary User = ULManager.InitializateUserLibrary();
-
 
 string[] UserCardCreateTemplate = { "Введите фамилию: ", "Введите имя: ", "Введите отчество: ", "Введите факультет: ", "Введите специальность: ", "Введите группу: ", "Введите курс: ", "Введите город проживания: ", "Введите E-mail: ", "Введите номер телефона: " };//Массив-шаблон, используемый при создании или редактировании карточки студента
 string[] UserCard = { "Фамилия: ", "Имя: ", "Отчество: ", "Факультет: ", "Специальность: ", "Группа: ", "Курс: ", "Город проживания: ", "E-mail: ", "Номер телефона: " };//Массив-шаблон, создающий структуру файла карточки студента при её создании или редактировании
-
-int UserNumbers = User.Numbers();
-
-
 
 void StartPage()
 {
@@ -48,7 +38,7 @@ void StartPage()
     }
     else if (UserInput == "0" || UserInput == "close" || UserInput == "закрыть" || UserInput == "exit" || UserInput == "выход")
     {
-        Environment.Exit(0);
+        Environment.Exit(0);        //Инициализация закрытия программы.
     }
     else
     {
@@ -60,7 +50,7 @@ void CreateUser()
 {
     Console.Clear();
     string PrevievInformation = "";
-    string FileName = "";
+    //string FileName = "";
     string[] UserInformation = new string[10];
     for (int i = 0; i < 10; i++)//Цикл, использующий массивы-шаблоны для создания карточки студента.
     {
@@ -142,7 +132,7 @@ void EditUser()
     {
         StartPage();
     }
-}
+}//Метод, вызываемый для начала редактирования пользователя.
 
 void InvalidInput()
 {
@@ -150,7 +140,9 @@ void InvalidInput()
     Console.WriteLine("Было введено неверное значение. Для возвращения на начальную страницу введите любое значение: ");
     Console.ReadLine();
     StartPage();
-}//Метод, на который будут ссылаться другие методы, в случае введённых пользователем некорректных значений. После ввода любого значения он возвращает на стартовую страницу. (Использовался в процессе написания программы, в качестве заглушки на случай непредвиденной ситуации и тестирования программы)
+}//Метод, на который будут ссылаться другие методы, в случае введённых пользователем некорректных значений.
+ //После ввода любого значения он возвращает на стартовую страницу. (Использовался в процессе написания
+ //программы, в качестве заглушки на случай непредвиденной ситуации и тестирования программы)
 
 void VievUserCard()
 {

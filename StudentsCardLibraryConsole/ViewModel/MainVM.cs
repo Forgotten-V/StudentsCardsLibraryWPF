@@ -1,4 +1,5 @@
-﻿using StudentsCardLibraryConsole.Model;
+﻿using ModelClassLibrary;
+using StudentsCardLibraryConsole.Model;
 using StudentsCardsLibraryWPF.Model;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace StudentsCardLibraryConsole.ViewModel
         MainModel Model = new MainModel();
         string[] UserCard = { "Фамилия: ", "Имя: ", "Отчество: ", "Факультет: ", "Специальность: ", "Группа: ", "Курс: ", "Город проживания: ", "E-mail: ", "Номер телефона: " };//Массив-шаблон, создающий структуру файла карточки студента при её создании или редактировании
 
-        public bool CheckInputData(string InputData)
+        public bool CheckInputData(string InputData)        //Функция, возвращающая false в случае получения пустого значения и предотвращения создания пустых данных о пользователе.
         {
             if (InputData == "")
             {
@@ -26,38 +27,46 @@ namespace StudentsCardLibraryConsole.ViewModel
             }
         }
 
-        public string FileName (string Surname, string Name, string Lastname, string Group)
+        public string FileName (string Surname, string Name, string Lastname, string Group)     //Функция, принимающая ФИО пользователи и название его группы, чтобы
+                                                                                                //вернуть уже готовое значение общей информации о пользователе.
         {
             string FileName = $"{Surname} {Name[0]}. {Lastname[0]}. {Group}";
             return FileName;
         }
 
-        public string [] OldUserInformation ()
+        public string [] OldUserInformation ()      //Функция-ретранслятор, возвращающая информацию о выбранном пользователе для её
+                                                    //дальнейшего сравнения с новой информацией при редактировании пользователя.
         {
             return Model.GetUserInformation();
         }
 
-        public void LoadUserInformation (string Surname, string Name, string Lastname, string Faculty, string Speciality, string Group, string Course, string City, string Email, string Phone)
+        public void LoadUserInformation (string Surname, string Name, string Lastname, string Faculty, string Speciality, string Group, string Course, string City, string Email, string Phone)     //Функция-ретранслятор, передающая данные в функцию для создания карточки пользователя и
+                                                                                                                                                                                                    //дополнительно генерируящая общую информацию о пользователе.
         {
             Model.CreateUser(Surname, Name, Lastname, Faculty, Speciality, Group, Course, City, Email, Phone, FileName(Surname, Name, Lastname, Group));
         }
 
-        public void LoadFilterMethod (int FilterMethod)
+        public void LoadFilterMethod (int FilterMethod)     //Небольшая функция, просто сохраняющая выбранный пользователем метод фильтрации.
+                                                            //Ранее она инициализировала запись этого метода в файл JSON, теперь просто
+                                                            //присваивает значение глобальной переменной.
         {
-            Model.SaveFilterMethod(FilterMethod);
+            GlobalVariables.FilterMethod = FilterMethod;
+            //Model.SaveFilterMethod(FilterMethod);
         }
 
-        public void SaveUserChoice (int UserChoice)
+        public void SaveUserChoice (int UserChoice)         //Функция, принимающая значение введённого пользователем ID. До ввода MVVM просто искала нужного пользователя в уже
+                                                            //отсортированном списке. Однако теперь необходимо вновь отсортировать всех пользователей лишь для того, чтобы
+                                                            //благодаря введённому значению пользователя корректно нашёлся необходимый ID.
+                                                            //Совсем плохо. Так делать нельзя(
         {
             string[] BufferValue = new string[3];
             string[][] UsersList = new string[Model.GetUsersNumbers()][];
-            string TotalUsersString = "";
-            UsersList = Model.GetUsersList(Model.GetFilterMethod());
-            for (int i = 0; i < Model.GetUsersNumbers(); i++)//Цикл "пузырьковой" сортировки карточек студентов в зависимости от необходимого метода сортировки.
+            UsersList = Model.GetUsersList(GlobalVariables.FilterMethod);
+            for (int i = 0; i < Model.GetUsersNumbers(); i++)
             {
                 for (int j = i + 1; j < Model.GetUsersNumbers(); j++)
                 {
-                    if (string.Compare(UsersList[i][1], UsersList[j][1]) > 0)//Условный оператор, внутри которого проводится сравнение по алфавиту отдельных параметров сокращённого массива. В случае получения значения false запускает цикл.
+                    if (string.Compare(UsersList[i][1], UsersList[j][1]) > 0)
                     {
                         BufferValue[0] = UsersList[j][0];
                         BufferValue[1] = UsersList[j][1];
@@ -71,10 +80,11 @@ namespace StudentsCardLibraryConsole.ViewModel
                     }
                 }
             }
-            Model.SaveUserID((Int32.Parse(UsersList[UserChoice - 1][2])) - 1);
+            GlobalVariables.UserID = (Int32.Parse(UsersList[UserChoice - 1][2])) - 1;
         }
 
-        public string PresentUserInformation ()
+        public string PresentUserInformation ()             //Функция, возвращающая готовую переменную, в которой уже имеется
+                                                            //вся информация о пользователе для дальнейшего ознакомления с ней.
         {
             string TotalPresentUserInformation = "Карточка студента ";
             string[] UserInformation = new string[10];
@@ -87,16 +97,16 @@ namespace StudentsCardLibraryConsole.ViewModel
             return TotalPresentUserInformation;
         }
 
-        public void InicializateDeleteProtocol()
+        public void InicializateDeleteProtocol()            //Функция-ретранслятор, которая запускает процесс удаления пользователя внутри Model.
         {
             Model.StartDeleteUser();
         }
-        public string AllUsersList ()
+        public string AllUsersList ()                       //Функция, возвращающая единственную переменную, в которой уже находится полностью отсортированный список пользователей.
         {
             string[] BufferValue = new string[3];
             string[][] UsersList = new string[Model.GetUsersNumbers()][];
             string TotalUsersString = "";
-            UsersList = Model.GetUsersList(Model.GetFilterMethod());
+            UsersList = Model.GetUsersList(GlobalVariables.FilterMethod);
             for (int i = 0; i < Model.GetUsersNumbers(); i++)//Цикл "пузырьковой" сортировки карточек студентов в зависимости от необходимого метода сортировки.
             {
                 for (int j = i + 1; j < Model.GetUsersNumbers(); j++)
@@ -115,7 +125,8 @@ namespace StudentsCardLibraryConsole.ViewModel
                     }
                 }
             }
-            if (Model.GetFilterMethod() == 0)
+            if (GlobalVariables.FilterMethod == 0)      //Условный оператор, позволяющий сделать создаваему переменную более информативной.
+                                                        //При желании можно вывести список пользователей и по одному шаблону, но будет уже не так красиво.
             {
                 for (int i = 1; i < Model.GetUsersNumbers() + 1; i++)
                 {
@@ -124,21 +135,21 @@ namespace StudentsCardLibraryConsole.ViewModel
             }
             else
             {
-                string BenchmarkValue = "";//Переменная, использующая в качестве эталона сортируемый параметр.
-                string PresentText = "";//Переменная, выступающая шаблоном выводимого текста для разделения критериев сортировки.
-                if (Model.GetFilterMethod() == 1)
+                string BenchmarkValue = "";     //Переменная, использующая в качестве эталона сортируемый параметр.
+                string PresentText = "";        //Переменная, выступающая шаблоном выводимого текста для разделения критериев сортировки.
+                if (GlobalVariables.FilterMethod == 1)
                 {
                     PresentText = "\nСтуденты факультета ";
                 }
-                else if (Model.GetFilterMethod() == 2)
+                else if (GlobalVariables.FilterMethod == 2)
                 {
                     PresentText = "\nСтуденты специальности ";
                 }
-                else if (Model.GetFilterMethod() == 3)
+                else if (GlobalVariables.FilterMethod == 3)
                 {
                     PresentText = "\nСтуденты группы ";
                 }
-                else if (Model.GetFilterMethod() == 4)
+                else if (GlobalVariables.FilterMethod == 4)
                 {
                     PresentText = "\nСтуденты курса ";
                 }
@@ -152,11 +163,11 @@ namespace StudentsCardLibraryConsole.ViewModel
                     TotalUsersString = TotalUsersString + $"{i}. {UsersList[i - 1][0]} \n";
                 }
             }
-
             return TotalUsersString;
         }
 
-        public string [] PreapareToEditUser(string[] LoadedInformation)
+        public string [] PreapareToEditUser(string[] LoadedInformation)     //Функция, возвращающая  результат редактирования пользователя для возможности
+                                                                            //ознакомления с изменениями и подтверждением их применения.
         {
             string[] OldInformation = new string[10];
             OldInformation = OldUserInformation();
@@ -175,7 +186,8 @@ namespace StudentsCardLibraryConsole.ViewModel
             return NewInformation;
         }
 
-        public void EditUserInformation (string[] NewUserInformation)
+        public void EditUserInformation (string[] NewUserInformation)       //Функция-ретранслятор, принимающая обновлённые данные о пользователе и
+                                                                            //отправляющая их в модель для споследующего сохранения в файле JSON.
         {
             Model.EditUser(NewUserInformation[0], NewUserInformation[1], NewUserInformation[2], NewUserInformation[3], NewUserInformation[4], NewUserInformation[5], NewUserInformation[6], NewUserInformation[7], NewUserInformation[8], NewUserInformation[9]);
         }
@@ -183,7 +195,9 @@ namespace StudentsCardLibraryConsole.ViewModel
         public bool CheckUserChoise(string UsersChoice)
         {
             {
-                if (int.TryParse(UsersChoice, out int UserInputInt))//Условный оператор, который пытается преобразовать введённое пользователем значение. Если это значение не числовое или выходит за границы количества карточек студентов - программа просто заново вызывает текущий метод.
+                if (int.TryParse(UsersChoice, out int UserInputInt))//Условный оператор, который пытается преобразовать введённое пользователем значение.
+                                                                    //Если это значение не числовое или выходит за границы количества карточек
+                                                                    //студентов - возвращает значение false.
                 {
                     if (UserInputInt >= 0 && UserInputInt <= Model.GetUsersNumbers())
                     {

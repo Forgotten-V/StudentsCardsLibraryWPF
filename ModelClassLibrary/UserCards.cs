@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StudentsCardsLibraryWPF.Model
 {
-    public class UserCards
+    public class UserCards          //Класс, из которого создаются пустые экземпляры, в будущем используемые для создания и редактирования пользователей.
     {
         public int ID { get; set; } = 0;
         public string FIO { get; set; } = null;

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace StudentsCardsLibraryWPF.Model
 {
-    public class UserLibrary
+    public class UserLibrary        //Класс, создающий коллекцию пользователей, сохранённых в JSON файл. Так же при
+                                    //необходимости способен возвращать количество пользователей в созданной коллекции.
     {
         public List<UserCards> ULibrary { get; set; } = new List<UserCards>();
 

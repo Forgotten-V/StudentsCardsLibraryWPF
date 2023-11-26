@@ -10,13 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using ModelClassLibrary;
 
 namespace StudentsCardsLibraryWPF.ViewModel
 {
-    public class UserPageLogicBlock : INotifyPropertyChanged
+    public class UserPageLogicBlock : INotifyPropertyChanged        //Класс, отвечающий по большей части за предзагрузку информации на странице пользователя. 
     {
-        public string[] UsersInformation = new string [11];
-        public string OutputSurname { get; set; } = "";
+        public string[] UsersInformation = new string [11];         //Массив, который принимает всю информацию о пользователе.
+        public string OutputSurname { get; set; } = "";             //Переменные, которым присваиваются значения данных пользователей и через привязку они выводятся для отображения.
         public string OutputName { get; set; } = "";
         public string OutputLastname { get; set; } = "";
         public string OutputFaculty { get; set; } = "";
@@ -27,24 +28,35 @@ namespace StudentsCardsLibraryWPF.ViewModel
         public string OutputEmail { get; set; } = "";
         public string OutputPhone { get; set; } = "";
 
-        public string TitleInformation { get; set; } = "Карточка студента ";
+        public string TitleInformation { get; set; } = "Профиль пользователя ";    //Переменная, хранящая краткую информацию об открытом профиле.
 
-        int UserID;
+        //int UserID;
 
-        public string TargetToDelete { get; set; } = "Введите фамилию пользователя для подтверждения его удаления";
+        public string TargetToDelete { get; set; } = "Введите фамилию пользователя для подтверждения его удаления";     //Переменная, принимающая в себя фамилию текущего студента для его последующего удаления.
+                                                                                                                        //Сделана в целях усложнения процесса удоления, чтобы предотвратить непреднамеренное удаление.
 
-        public ICommand OpenAlternativeUsersListPage
+        public ICommand OpenUsersListPage       //Команда и еёфункция, позволяющая вернуться обратно к списку поьзователей.
         {
-            get { return new NavigateRelayCommand(VOpenAlternativeUsersListPage); }
+            get { return new NavigateRelayCommand(VOpenUsersListPage); }
         }
 
-        private void VOpenAlternativeUsersListPage()
+        private void VOpenUsersListPage()
         {
-            var OpenAlternativeUsersListPage = new FrameAlternativeUsersList();
-            App.Current.MainWindow.Content = OpenAlternativeUsersListPage;
+            if (GlobalVariables.WindowMode == 0)            //Открывает список пользователей, вид которого зависит
+                                                            //от последнего выбранного способа его отображения.
+            {
+                GlobalVariables.FilterMethod = 0;
+                var OpenUsersListPage = new FrameAlternativeUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
+            }
+            else if (GlobalVariables.WindowMode == 1)
+            {
+                var OpenUsersListPage = new FrameUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
+            }
         }
 
-        public ICommand OpenMainPage
+        public ICommand OpenMainPage        //Команда и её функция, открывающая главное окно программы.
         {
             get { return new NavigateRelayCommand(VOpenMainPage); }
         }
@@ -55,7 +67,7 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenStartPage;
         }
 
-        public ICommand StartEditUser
+        public ICommand StartEditUser       //Команда и её функция, позволяющая начать редактировать информацию о текущем пользователе.
         {
             get { return new NavigateRelayCommand(VStartEditUser); }
         }
@@ -66,8 +78,9 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenEditUserPage;
         }
 
-        //public void UserPagePreLoaded()
-        //{
+        //public void UserPagePreLoaded()       //Неудачная попытка организовать функцию предзагрузки данных, чтобы не использовать
+                                                //для страницы отдельный класс и не копировать между классами одни и те же команды
+        //{                                   
         //    MainModel Model = new MainModel();
         //    UserID = Model.GetUserIDForView();
         //    UsersInformation = Model.PresentUserInformation(UserID);
@@ -85,11 +98,12 @@ namespace StudentsCardsLibraryWPF.ViewModel
         //    MessageBox.Show($"{OutputSurname}");
         //}
 
-        public UserPageLogicBlock()
+        public UserPageLogicBlock()             //При открытии страницы пользователя происходит инициализация класса, который сначала получает информацию
+                                                //о выбранном пользователе, а затем загружает её в переменные, отображающиеся на странице пользователя.
         {
-            MainModel Model = new MainModel();
-            UserID = Model.GetUserIDForView();
-            UsersInformation = Model.PresentUserInformation(UserID);
+            MainModel Model = new MainModel();      
+            //UserID = Model.GetUserIDForView();    //Старый вариант получения ID пользователя json-файла
+            UsersInformation = Model.PresentUserInformation(GlobalVariables.UserID);
             TitleInformation = TitleInformation + UsersInformation[0];
             OutputSurname = UsersInformation[1];
             OutputName = UsersInformation[2];
@@ -103,14 +117,14 @@ namespace StudentsCardsLibraryWPF.ViewModel
             OutputPhone = UsersInformation[10];
         }
 
-        public ICommand TryDeleteUser
+        public ICommand TryDeleteUser           //Команда и её функция, позволяющая удалить текущего пользователя.
         {
             get { return new NavigateRelayCommand(VTryDeleteUser); }
         }
 
         private void VTryDeleteUser()
         {
-            if (UsersInformation[1] == TargetToDelete)
+            if (UsersInformation[1] == TargetToDelete)      //Условный оператор, сравнивающий введённую информацию с фамилией пользователя. В случае успеха запускает функцию удаления пользователя.
             {
                 MainModel Model = new MainModel();
                 Model.DeleteUser();
