@@ -51,7 +51,6 @@ namespace StudentsCardLibraryConsole.ViewModel
                                                             //присваивает значение глобальной переменной.
         {
             GlobalVariables.FilterMethod = FilterMethod;
-            //Model.SaveFilterMethod(FilterMethod);
         }
 
         public void SaveUserChoice (int UserChoice)         //Функция, принимающая значение введённого пользователем ID. До ввода MVVM просто искала нужного пользователя в уже

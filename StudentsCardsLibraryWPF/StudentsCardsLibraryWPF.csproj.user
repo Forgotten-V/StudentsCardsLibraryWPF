@@ -7,16 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="View\FrameAlternativeUsersList.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="View\FrameCreateUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FrameEditUser.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\FramePickFilterMethod.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FrameUserPage.xaml.cs">
@@ -33,16 +27,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="View\FrameAlternativeUsersList.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="View\FrameCreateUser.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FrameEditUser.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\FramePickFilterMethod.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FrameUserPage.xaml">

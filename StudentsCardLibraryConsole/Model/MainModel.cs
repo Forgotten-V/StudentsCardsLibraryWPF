@@ -15,36 +15,9 @@ namespace StudentsCardLibraryConsole.Model
 
     public class MainModel
     {
-
-
-        //public int GetFilterMethod()                          //Функция, ранее возвращавшая метод фильтрации, записанный в файл JSON.
-        //{
-        //    string PathFiles = Directory.GetCurrentDirectory();
-        //    string UserAppConfigPath = PathFiles.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    int FilterMethod;
-        //    FilterMethod = Config.FilterMethod;
-        //    return FilterMethod;
-        //}
-
-        //public void SaveUserID(int UserID)                    //Функция, ранее записывавшая ID пользователя в файл JSON для его последующего использования
-        //В просмотре карточки пользователя, а также её редактирования и удаления.
-        //{
-        //    string PathFiles = Directory.GetCurrentDirectory();
-        //    string UserAppConfigPath = PathFiles.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    Config.UserIDForView = UserID;
-        //    UConfig.UpdateAppConfig(Config);
-        //}
-
         public void CreateUser (string Surname, string Name, string Lastname, string Faculty, string Speciality, string Group, string Course, string City, string Email, string Phone, string FIO)  //Функция, создающая нового пользователя и записывающая его в JSON файл. В качестве аргументов принимает все необходимые данные о пользователе.
         {
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";   //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();     //Создание экземпляра класса с данными о пользователе.
             User.ULibrary.Add(new UserCards
             {
@@ -64,47 +37,16 @@ namespace StudentsCardLibraryConsole.Model
             ULManager.AddUser(User);    //Вызов функции, добавляющей в файл библиотеки данные о только-что созданном пользователе.
         }
 
-        //public void SaveFilterMethod (int FilterMethod)       //Функция, ранее записывающая выбраный метод фильтрации, в последствие используемый для созданий
-                                                                //предварительно отфильтрованной базы данных пользователей.
-        //{
-        //    string UserAppConfigPath = Directory.GetCurrentDirectory();
-        //    UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    Config.FilterMethod = FilterMethod;
-        //    UConfig.UpdateAppConfig(Config);
-        //}
-
-        //public int GetUserIDForView()         //Старая функция, ранее возвращавшее значение записанного в JSON файл ID пользователя.
-        //{
-        //    string PathFiles = Directory.GetCurrentDirectory();
-        //    string UserAppConfigPath = PathFiles.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    int UserIdForView;
-        //    UserIdForView = Config.UserIDForView;
-        //    return UserIdForView;
-        //}
-
         public int GetUsersNumbers ()       //Функция, возвращающая значение текущего количества существующих в JSON файле пользователей.
         {
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             return User.Numbers();                                  //Инициализация функции, вовзвращающей значение числа пользователей.
         }
 
         public void StartDeleteUser ()      //Функция, начинающая процесс удаления выбранного пользователя
         {
-            //string PathFiles = Directory.GetCurrentDirectory();       //
-            //string UserAppConfigPath = PathFiles.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-            //UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-            //UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-            //UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";      //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             if (User.Numbers() != GlobalVariables.UserID)       //Чтобы не удалить лишнего пользователя проверяется значение введённого ID и общего числа пользователей.
                                                                 //Действия, выполняемые в случае удовлетворения условий, позволяют ID пользователей не превратиться со временем в швейцарский сыр с пустыми ячейками.
@@ -152,13 +94,7 @@ namespace StudentsCardLibraryConsole.Model
                                                                                                                                                                                         //пользователе. Она полностью заменяет старую информацию пользователя на новую, которую
                                                                                                                                                                                         //получает в виде аргументов.
         {
-            //string PathFiles = Directory.GetCurrentDirectory();
-            //string UserAppConfigPath = PathFiles.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-            //UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-            //UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-            //UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             int UserID = GlobalVariables.UserID;
             UserCards EditedUser = new UserCards            //Заполнение информации о пользователе, которая впоследствии заменит собой старую.
@@ -181,8 +117,7 @@ namespace StudentsCardLibraryConsole.Model
 
         public string [] GetUserInformation()       //Функция, возвращающая в виде массива всю информацию о пользователе с указаным ID.
         {
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             UserCards CurrentUser = User.ULibrary.FirstOrDefault(u => u.ID == GlobalVariables.UserID);
             string UserCardView = $"Информация о студенте {CurrentUser.FIO}\n";
@@ -202,10 +137,7 @@ namespace StudentsCardLibraryConsole.Model
         public string[][] GetUsersList (int FilterMethod)           //Функция, создающая двумерный массив со всеми существующими пользователями. Принимает в
                                                                     //качестве аргумента значение фильтра, по которому в последствии будет выбран сортируемый параметр.
         {
-            string UserLibraryPath = Directory.GetCurrentDirectory();
-            UserLibraryPath = UserLibraryPath.Replace("\\StudentsCardLibraryConsole\\bin\\Debug\\net7.0", "");
-            UserLibraryPath = UserLibraryPath + "\\UserLibrary.json";
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             string[][] SortValue = new string[User.Numbers()][];    //Создание массива, в который в последствии будет загружена основная информация о пользователе,
                                                                     //критерий, по которому будет происходить сортировка, и его ID.

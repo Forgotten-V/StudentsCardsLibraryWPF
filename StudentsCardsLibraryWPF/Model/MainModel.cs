@@ -18,8 +18,7 @@ namespace StudentsCardsLibraryWPF.Model
         public void CreateNewUser (string Surname, string Name, string LastName, string Faculty, string Speciality, string Group, string Course, string City, string Email, string Phone)   //Функция, создающая нового пользователя и записывающая его в JSON файл.
                                                                                                                                                                                             //В качестве аргументов принимает все необходимые данные о пользователе.
         {
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();     //Создание экземпляра класса с данными о пользователе.
             string FileName = Surname + " " + Name[0] + "." + LastName[0] + "." + " " + Group;
             User.ULibrary.Add(new UserCards
@@ -45,13 +44,7 @@ namespace StudentsCardsLibraryWPF.Model
                                                                                                                                                                                             //пользователе. Она полностью заменяет старую информацию пользователя на новую, которую
                                                                                                                                                                                             //получает в виде аргументов.
         {
-            //string PathFiles = Directory.GetCurrentDirectory();
-            //string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
-            //UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-            //UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-            //UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             int UserID = GlobalVariables.UserID;
             UserCards EditedUser = new UserCards                                //Заполнение информации о пользователе, которая впоследствии заменит собой старую.
@@ -73,13 +66,7 @@ namespace StudentsCardsLibraryWPF.Model
         }
         public void DeleteUser ()       //Функция, начинающая процесс удаления выбранного пользователя
         {
-            //string PathFiles = Directory.GetCurrentDirectory();
-            //string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
-            //UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-            //UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-            //UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             if (User.Numbers() != GlobalVariables.UserID)       //Чтобы не удалить лишнего пользователя проверяется значение введённого ID и общего числа пользователей.
                                                                 //Действия, выполняемые в случае удовлетворения условий, позволяют ID пользователей не превратиться со временем в швейцарский сыр с пустыми ячейками.
@@ -125,16 +112,6 @@ namespace StudentsCardsLibraryWPF.Model
             GlobalVariables.UserID = -1;
         }
 
-       //public void EditFilterMethod(int Number)         //Старая функция, ранее записывавшая выбранный метод сортировки в JSON файл.
-       // {
-       //     string UserAppConfigPath = Directory.GetCurrentDirectory();
-       //     UserAppConfigPath = UserAppConfigPath.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
-       //     UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-       //     UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-       //     UserAppConfig Config = UConfig.InitializateUserAppConfig();
-       //     Config.FilterMethod = Number;
-       //     UConfig.UpdateAppConfig(Config);
-       // }
         
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -143,32 +120,9 @@ namespace StudentsCardsLibraryWPF.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        //public void SaveUserID(int UserID)                    //Функция, ранее записывавшая ID пользователя в файл JSON для его последующего использования
-        //В просмотре карточки пользователя, а также её редактирования и удаления
-        //{
-        //    string PathFiles = Directory.GetCurrentDirectory();
-        //    string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    Config.UserIDForView = UserID;
-        //    UConfig.UpdateAppConfig(Config);
-        //}
-
-        //public int GetFilterMethod()                          //Функция, ранее возвращавшая метод фильтрации, записанный в файл JSON
-        //{
-        //    string PathFiles = Directory.GetCurrentDirectory();
-        //    string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    return Config.FilterMethod;
-        //}
-
         public int GetUsersNumbers()       //Функция, возвращающая значение текущего количества существующих в JSON файле пользователей.
         {
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             return User.Numbers();                                  //Инициализация функции, вовзвращающей значение числа пользователей.
         }
@@ -178,8 +132,7 @@ namespace StudentsCardsLibraryWPF.Model
         {
             string[] UserInformation = new string [11];
             string PathFiles = Directory.GetCurrentDirectory();
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             UserCards CurrentUser = User.ULibrary.FirstOrDefault(u => u.ID == UserID);
             UserInformation[0] = CurrentUser.FIO;
@@ -196,29 +149,13 @@ namespace StudentsCardsLibraryWPF.Model
             return UserInformation;
         }
 
-        //public int GetUserIDForView ()            //Старая функция, ранее возвращавшее значение записанного в JSON файл ID пользователя.
-        //{
-        //    string PathFiles = Directory.GetCurrentDirectory();
-        //    string UserAppConfigPath = PathFiles.Replace("\\StudentsCardsLibraryWPF\\bin\\Debug\\net7.0-windows", "");
-        //    UserAppConfigPath = UserAppConfigPath + "\\UserAppConfig.json";
-        //    UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-        //    UserAppConfig Config = UConfig.InitializateUserAppConfig();
-        //    int UserIdForView;
-        //    UserIdForView = Config.UserIDForView;
-        //    return UserIdForView;
-        //}
 
         public string[][] CreateUsersBase()         //Функция, создающая базу данных о пользователе. В зависимости от выбранного метода
                                                     //фильтрации (Который зависит от варианта отображения списка пользователей) может
                                                     //создать либо полную информацию обо всех пользователях, либо лишь основные данные.
         {
             string[][] UsersListSortValueModel;
-            //string PathFiles = Directory.GetCurrentDirectory();
-            //string UserAppConfigPath = PathFiles + "\\../../../../UserAppConfig.json";
-            //UserAppConfigManager UConfig = new UserAppConfigManager(UserAppConfigPath);
-            //UserAppConfig Config = UConfig.InitializateUserAppConfig();
-            string UserLibraryPath = Directory.GetCurrentDirectory() + "\\../../../../UserLibrary.json";    //Получение текущего расположения приложения на диске и указание пути к файлу с библиотекой пользователей.
-            UserLibraryManager ULManager = new UserLibraryManager(UserLibraryPath);
+            UserLibraryManager ULManager = new UserLibraryManager(GlobalVariables.UserLibraryPath);
             UserLibrary User = ULManager.InitializateUserLibrary();
             int UserNumbers = User.Numbers();
             string[] BuferValue = new string[13];
@@ -229,67 +166,23 @@ namespace StudentsCardsLibraryWPF.Model
                     UsersListSortValueModel[i] = new string[13];
                 }
             }
-            if (GlobalVariables.FilterMethod == 0)      //Условный оператор, от которого зависит какие именно данные будут загруженны в массив.
+            for (int i = 1; i < UserNumbers + 1; i++)       //Все данные о пользователе загружаются только в случае выбора сортировки
+                                                            //по фамилии. В остальных случая в этом нет необходимости.
             {
-                for (int i = 1; i < UserNumbers + 1; i++)       //Все данные о пользователе загружаются только в случае выбора сортировки
-                                                                //по фамилии. В остальных случая в этом нет необходимости.
-                {
-                    UserCards TempValue = User.ULibrary.FirstOrDefault(u => u.ID == i);
-                    UsersListSortValueModel[i - 1][0] = TempValue.FIO;
-                    UsersListSortValueModel[i - 1][1] = TempValue.Surname;
-                    UsersListSortValueModel[i - 1][2] = $"{i + 1}";
-                    UsersListSortValueModel[i - 1][3] = TempValue.Surname;
-                    UsersListSortValueModel[i - 1][4] = TempValue.Name;
-                    UsersListSortValueModel[i - 1][5] = TempValue.LastName;
-                    UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
-                    UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
-                    UsersListSortValueModel[i - 1][8] = TempValue.Group;
-                    UsersListSortValueModel[i - 1][9] = TempValue.Course;
-                    UsersListSortValueModel[i - 1][10] = TempValue.City;
-                    UsersListSortValueModel[i - 1][11] = TempValue.Email;
-                    UsersListSortValueModel[i - 1][12] = TempValue.Phone;
-                }
-            }
-            else if (GlobalVariables.FilterMethod == 1)
-            {
-                for (int i = 1; i < UserNumbers + 1; i++)
-                {
-                    UserCards TempValue = User.ULibrary.FirstOrDefault(u => u.ID == i);
-                    UsersListSortValueModel[i - 1][0] = TempValue.FIO;
-                    UsersListSortValueModel[i - 1][1] = TempValue.Faculty;
-                    UsersListSortValueModel[i - 1][2] = $"{i + 1}";
-                }
-            }
-            else if (GlobalVariables.FilterMethod == 2)
-            {
-                for (int i = 1; i < UserNumbers + 1; i++)
-                {
-                    UserCards TempValue = User.ULibrary.FirstOrDefault(u => u.ID == i);
-                    UsersListSortValueModel[i - 1][0] = TempValue.FIO;
-                    UsersListSortValueModel[i - 1][1] = TempValue.Speciality;
-                    UsersListSortValueModel[i - 1][2] = $"{i + 1}";
-                }
-            }
-            else if (GlobalVariables.FilterMethod == 3)
-            {
-                for (int i = 1; i < UserNumbers + 1; i++)
-                {
-                    UserCards TempValue = User.ULibrary.FirstOrDefault(u => u.ID == i);
-                    UsersListSortValueModel[i - 1][0] = TempValue.FIO;
-                    UsersListSortValueModel[i - 1][1] = TempValue.Group;
-                    UsersListSortValueModel[i - 1][2] = $"{i + 1}";
-                }
-            }
-            else if (GlobalVariables.FilterMethod == 4)
-            {
-                for (int i = 1; i < UserNumbers + 1; i++)
-                {
-                    UserCards TempValue = User.ULibrary.FirstOrDefault(u => u.ID == i);
-                    UsersListSortValueModel[i - 1][0] = TempValue.FIO;
-                    UsersListSortValueModel[i - 1][1] = TempValue.Course;
-                    UsersListSortValueModel[i - 1][2] = $"{i + 1}";
-                }
-                
+                UserCards TempValue = User.ULibrary.FirstOrDefault(u => u.ID == i);
+                UsersListSortValueModel[i - 1][0] = TempValue.FIO;
+                UsersListSortValueModel[i - 1][1] = TempValue.Surname;
+                UsersListSortValueModel[i - 1][2] = $"{i + 1}";
+                UsersListSortValueModel[i - 1][3] = TempValue.Surname;
+                UsersListSortValueModel[i - 1][4] = TempValue.Name;
+                UsersListSortValueModel[i - 1][5] = TempValue.LastName;
+                UsersListSortValueModel[i - 1][6] = TempValue.Faculty;
+                UsersListSortValueModel[i - 1][7] = TempValue.Speciality;
+                UsersListSortValueModel[i - 1][8] = TempValue.Group;
+                UsersListSortValueModel[i - 1][9] = TempValue.Course;
+                UsersListSortValueModel[i - 1][10] = TempValue.City;
+                UsersListSortValueModel[i - 1][11] = TempValue.Email;
+                UsersListSortValueModel[i - 1][12] = TempValue.Phone;
             }
 
             for (int i = 0; i < UserNumbers; i++)       //Цикл "пузырьковой" сортировки карточек студентов в зависимости от необходимого метода сортировки.

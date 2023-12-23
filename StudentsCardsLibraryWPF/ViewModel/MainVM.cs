@@ -56,18 +56,6 @@ namespace StudentsCardsLibraryWPF.ViewModel
             App.Current.MainWindow.Content = OpenCreateUser;
         }
 
-        //public ICommand OpenPickFilterMethodPage            //Команда и её функция, открывающая страниуц выбора метода сортировки. Сейчас не нужна, в виду того
-        //                                                    //что теперь сразу открывается список пользователей без предварительного выбора способа сортировки.
-        //{
-        //    get { return new NavigateRelayCommand(VOpenPickFilterMethodPage); }
-        //}
-
-        //private void VOpenPickFilterMethodPage()
-        //{
-        //    var OpenPickFilterMethod = new FramePickFilterMethod();
-        //    App.Current.MainWindow.Content = OpenPickFilterMethod;
-        //}
-
         public ICommand HotOpenUsersPage        //Команда и её функция, открывающая страницу последнего выбранного пользователя.
         {
             get { return new NavigateRelayCommand(VHotOpenUsersPage); }
@@ -107,18 +95,28 @@ namespace StudentsCardsLibraryWPF.ViewModel
             }
             else
             {
-                if (GlobalVariables.WindowMode == 0)            //Открывает список пользователей, вид которого зависит
-                                                                //от последнего выбранного способа его отображения.
-                {
-                    GlobalVariables.FilterMethod = 0;
-                    var OpenUsersListPage = new FrameAlternativeUsersList();
-                    App.Current.MainWindow.Content = OpenUsersListPage;
-                }
-                else if (GlobalVariables.WindowMode == 1)
-                {
-                    var OpenUsersListPage = new FrameUsersList();
-                    App.Current.MainWindow.Content = OpenUsersListPage;
-                }
+                var OpenUsersListPage = new FrameUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
+            }
+        }
+
+        public ICommand StartCreateUser
+        {
+            get { return new NavigateRelayCommand(VStartCreateUser); }
+        }
+
+        private void VStartCreateUser()
+        {
+            if (InputSurname == "" || InputName == "" || InputLastname == "" || InputFaculty == "" || InputSpeciality == "" || InputGroup == "" || InputCourse == "" || InputCity == "" || InputEmail == "" || InputPhone == "")
+            {
+                MessageBox.Show("Заполните все поля, для создания карточки студента.");
+            }
+            else
+            {
+                MainModel NewUser = new MainModel();
+                NewUser.CreateNewUser(InputSurname, InputName, InputLastname, InputFaculty, InputSpeciality, InputGroup, InputCourse, InputCity, InputEmail, InputPhone);
+                var OpenStartPage = new StartPage();
+                App.Current.MainWindow.Content = OpenStartPage;
             }
         }
 

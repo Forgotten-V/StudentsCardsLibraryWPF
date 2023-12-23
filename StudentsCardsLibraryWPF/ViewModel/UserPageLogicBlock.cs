@@ -30,8 +30,6 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
         public string TitleInformation { get; set; } = "Профиль пользователя ";    //Переменная, хранящая краткую информацию об открытом профиле.
 
-        //int UserID;
-
         public string TargetToDelete { get; set; } = "Введите фамилию пользователя для подтверждения его удаления";     //Переменная, принимающая в себя фамилию текущего студента для его последующего удаления.
                                                                                                                         //Сделана в целях усложнения процесса удоления, чтобы предотвратить непреднамеренное удаление.
 
@@ -42,18 +40,8 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
         private void VOpenUsersListPage()
         {
-            if (GlobalVariables.WindowMode == 0)            //Открывает список пользователей, вид которого зависит
-                                                            //от последнего выбранного способа его отображения.
-            {
-                GlobalVariables.FilterMethod = 0;
-                var OpenUsersListPage = new FrameAlternativeUsersList();
-                App.Current.MainWindow.Content = OpenUsersListPage;
-            }
-            else if (GlobalVariables.WindowMode == 1)
-            {
-                var OpenUsersListPage = new FrameUsersList();
-                App.Current.MainWindow.Content = OpenUsersListPage;
-            }
+            var OpenUsersListPage = new FrameUsersList();
+            App.Current.MainWindow.Content = OpenUsersListPage;
         }
 
         public ICommand OpenMainPage        //Команда и её функция, открывающая главное окно программы.
@@ -77,26 +65,6 @@ namespace StudentsCardsLibraryWPF.ViewModel
             var OpenEditUserPage = new FrameEditUser();
             App.Current.MainWindow.Content = OpenEditUserPage;
         }
-
-        //public void UserPagePreLoaded()       //Неудачная попытка организовать функцию предзагрузки данных, чтобы не использовать
-                                                //для страницы отдельный класс и не копировать между классами одни и те же команды
-        //{                                   
-        //    MainModel Model = new MainModel();
-        //    UserID = Model.GetUserIDForView();
-        //    UsersInformation = Model.PresentUserInformation(UserID);
-        //    TitleInformation = TitleInformation + UsersInformation[0];
-        //    OutputSurname = UsersInformation[1];
-        //    OutputName = UsersInformation[2];
-        //    OutputLastname = UsersInformation[3];
-        //    OutputFaculty = UsersInformation[4];
-        //    OutputSpeciality = UsersInformation[5];
-        //    OutputGroup = UsersInformation[6];
-        //    OutputCourse = UsersInformation[7];
-        //    OutputCity = UsersInformation[8];
-        //    OutputEmail = UsersInformation[9];
-        //    OutputPhone = UsersInformation[10];
-        //    MessageBox.Show($"{OutputSurname}");
-        //}
 
         public UserPageLogicBlock()             //При открытии страницы пользователя происходит инициализация класса, который сначала получает информацию
                                                 //о выбранном пользователе, а затем загружает её в переменные, отображающиеся на странице пользователя.

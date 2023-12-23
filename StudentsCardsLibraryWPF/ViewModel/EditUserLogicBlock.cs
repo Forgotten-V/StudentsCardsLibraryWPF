@@ -61,18 +61,8 @@ namespace StudentsCardsLibraryWPF.ViewModel
 
         private void VOpenUsersListPage()
         {
-            if (GlobalVariables.WindowMode == 0)            //Открывает список пользователей, вид которого зависит
-                                                            //от последнего выбранного способа его отображения.
-            {
-                GlobalVariables.FilterMethod = 0;
-                var OpenUsersListPage = new FrameAlternativeUsersList();
-                App.Current.MainWindow.Content = OpenUsersListPage;
-            }
-            else if (GlobalVariables.WindowMode == 1)
-            {
-                var OpenUsersListPage = new FrameUsersList();
-                App.Current.MainWindow.Content = OpenUsersListPage;
-            }
+            var OpenUsersListPage = new FrameUsersList();
+            App.Current.MainWindow.Content = OpenUsersListPage;
         }
 
         public ICommand OpenUserPage            //Команда и её функция, возвращающая на страницу редактируемого пользователя.
@@ -102,19 +92,8 @@ namespace StudentsCardsLibraryWPF.ViewModel
                 MainModel Model = new MainModel();
                 Model.EditUser(InputSurname, InputName, InputLastname, InputFaculty, InputSpeciality, InputGroup, InputCourse, InputCity, InputEmail, InputPhone);      //В случае отсутствия пустых текстовых блоков вызывает метод для редактирования пользователя и загружает в него все необходимые данные.
                 MessageBox.Show($"Информация о пользователе {InputSurname} {InputName[0]}. {InputLastname[0]}. успешно обновлена.");
-                if (GlobalVariables.WindowMode == 0)            //По завершению редактирования открывает список пользователей, вид
-                                                                //которого зависит от последнего выбранного способа его отображения.
-                {
-                    GlobalVariables.FilterMethod = 0;           //Скорее всего, метод фильтрации уже был установлен как 0, но лишний раз сделать это не
-                                                                //помешает - по умолчанию метод сортировки в таблице только по фамилии
-                    var OpenUsersListPage = new FrameAlternativeUsersList();
-                    App.Current.MainWindow.Content = OpenUsersListPage;
-                }
-                else if (GlobalVariables.WindowMode == 1)
-                {
-                    var OpenUsersListPage = new FrameUsersList();
-                    App.Current.MainWindow.Content = OpenUsersListPage;
-                }
+                var OpenUsersListPage = new FrameUsersList();
+                App.Current.MainWindow.Content = OpenUsersListPage;
             }
         }
     }
